@@ -9,6 +9,6 @@ namespace QuizApplication.Models
     {
         public int QuizID { get; set; }
         public string QuizName { get; set; }
-        public string Diffilculty { get; set; }
+        public int Difficulty { get; set; }
     }
 }
