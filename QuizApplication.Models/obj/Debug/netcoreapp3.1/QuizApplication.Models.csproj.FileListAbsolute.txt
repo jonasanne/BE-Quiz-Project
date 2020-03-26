@@ -1,0 +1,9 @@
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\obj\Debug\netcoreapp3.1\QuizApplication.Models.AssemblyInfoInputs.cache
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\obj\Debug\netcoreapp3.1\QuizApplication.Models.AssemblyInfo.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\bin\Debug\netcoreapp3.1\QuizApplication.Models.deps.json
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\bin\Debug\netcoreapp3.1\QuizApplication.Models.dll
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\bin\Debug\netcoreapp3.1\QuizApplication.Models.runtimeconfig.json
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\bin\Debug\netcoreapp3.1\QuizApplication.Models.runtimeconfig.dev.json
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\bin\Debug\netcoreapp3.1\QuizApplication.Models.pdb
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\obj\Debug\netcoreapp3.1\QuizApplication.Models.dll
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\obj\Debug\netcoreapp3.1\QuizApplication.Models.pdb

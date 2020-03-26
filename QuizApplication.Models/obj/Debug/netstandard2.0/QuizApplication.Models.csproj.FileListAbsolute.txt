@@ -1,0 +1,3 @@
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\obj\Debug\netstandard2.0\QuizApplication.Models.csprojAssemblyReference.cache
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\obj\Debug\netstandard2.0\QuizApplication.Models.AssemblyInfoInputs.cache
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\obj\Debug\netstandard2.0\QuizApplication.Models.AssemblyInfo.cs

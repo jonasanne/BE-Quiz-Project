@@ -79,3 +79,4 @@ D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\bin\Debug\netcoreapp
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Security.Cryptography.Pkcs.dll
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\QuizApplication.MvcApplicationPartsAssemblyInfo.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\QuizApplication.MvcApplicationPartsAssemblyInfo.cache
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\QuizApplication.csprojAssemblyReference.cache
