@@ -47,5 +47,19 @@ namespace QuizApplication.Repositories
 
         }
 
+        public Task<Quiz> GetQuizByIdAsync(Guid Id)
+        {
+            try
+            {
+                return context.Quizzes.FirstOrDefaultAsync<Quiz>(e => e.QuizID == Id) ;
+            }
+
+            catch (Exception ex)
+            {
+
+                Debug.WriteLine(ex.InnerException.Message);
+                throw null;
+            }
+        }
     }
 }

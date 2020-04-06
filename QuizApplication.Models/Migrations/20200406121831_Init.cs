@@ -71,6 +71,7 @@ namespace QuizApplication.Models.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Scores", x => x.ScoreId);
+                   
                 });
 
             migrationBuilder.CreateTable(

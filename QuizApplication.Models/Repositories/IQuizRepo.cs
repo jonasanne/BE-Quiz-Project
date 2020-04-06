@@ -19,6 +19,7 @@ namespace QuizApplication.Repositories
         /// <param name="difficulty"></param>
         /// <returns></returns>
         Task<Quiz> GetQuizByDifficultyAsync(int difficulty);
+        Task<Quiz> GetQuizByIdAsync(Guid Id);
 
 
 
