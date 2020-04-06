@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,8 +8,18 @@ namespace QuizApplication.Models
 {
     public class Question
     {
-        public int QuestionId { get; set; }
+        [Key]
+        public Guid QuestionId { get; set; } = Guid.NewGuid();
+
+        [Required]
         public string QuestionText { get; set; }
-        public int QuizID { get; set; }
+        
+        [Required]
+        public Guid QuizId { get; set; }
+
+
+        //navigation property
+        public Quiz Quiz { get; set; }
+        
     }
 }

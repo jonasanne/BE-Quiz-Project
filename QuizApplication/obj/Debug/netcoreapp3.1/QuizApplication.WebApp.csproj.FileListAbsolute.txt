@@ -69,8 +69,6 @@ D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\bin\Debug\netcoreapp
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\bin\Debug\netcoreapp3.1\QuizApplication.Models.pdb
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\staticwebassets\QuizApplication.WebApp.StaticWebAssets.Manifest.cache
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\staticwebassets\QuizApplication.WebApp.StaticWebAssets.xml
-D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\QuizApplication.WebApp.MvcApplicationPartsAssemblyInfo.cs
-D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\QuizApplication.WebApp.MvcApplicationPartsAssemblyInfo.cache
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\QuizApplication.WebApp.RazorAssemblyInfo.cache
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\QuizApplication.WebApp.RazorAssemblyInfo.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\QuizApplication.WebApp.AssemblyInfoInputs.cache
@@ -93,3 +91,5 @@ D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\QuizApplication.WebApp.csproj.CopyComplete
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\QuizApplication.WebApp.dll
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\QuizApplication.WebApp.pdb
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\QuizApplication.WebApp.MvcApplicationPartsAssemblyInfo.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\QuizApplication.WebApp.MvcApplicationPartsAssemblyInfo.cache

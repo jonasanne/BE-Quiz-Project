@@ -22,7 +22,7 @@ namespace QuizApplication.Repositories
         {
             try
             {
-                return await context.Questions.OrderBy(q => q.QuizID).ToListAsync();
+                return await context.Questions.OrderBy(q => q.QuizId).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -32,19 +32,19 @@ namespace QuizApplication.Repositories
             }
         }
 
-        public async Task<IEnumerable<Question>> GetQuestionsByIdAsync(int id)
-        {
-            try
-            {
-                return await context.Questions.Where(q => q.QuizID == id).ToListAsync();
-            }
+        //public async Task<IEnumerable<Question>> GetQuestionsByIdAsync(int id)
+        //{
+        //    try
+        //    {
+        //        return await context.Questions.Where(q => q.QuizID == id).ToListAsync();
+        //    }
 
-            catch (Exception ex)
-            {
+        //    catch (Exception ex)
+        //    {
 
-                Debug.WriteLine(ex.InnerException.Message);
-                throw null;
-            }
-        }
+        //        Debug.WriteLine(ex.InnerException.Message);
+        //        throw null;
+        //    }
+        //}
     }
 }

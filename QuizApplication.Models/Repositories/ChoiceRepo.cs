@@ -17,7 +17,7 @@ namespace QuizApplication.Repositories
         {
             this.context = context;
         }
-        public async Task<IEnumerable<Choice>> GetChoicesAsync(int QuestionId) { 
+        public async Task<IEnumerable<Choice>> GetChoicesAsync(Guid QuestionId) { 
             try
             {
                 return await context.Choices.Where(c => c.QuestionID == QuestionId).ToListAsync();

@@ -19,11 +19,18 @@ namespace QuizApplication.Data
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<Answer> Answers { get; set; }
         public virtual DbSet<Choice> Choices { get; set; }
+        public virtual DbSet<Score> Scores { get; set; }
 
         //fluent api
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Quiz>(e =>
+            {
+                e.Property(e => e.Difficulty).IsRequired();
+            });
+
+
         }
 
 

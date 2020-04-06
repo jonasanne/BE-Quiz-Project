@@ -9,6 +9,6 @@ namespace QuizApplication.Repositories
     public interface IAnswerRepo
     {
 
-        Task<Answer> GetAnswerByQuestionAsync(int id);
+        Task<Answer> GetAnswerByQuestionAsync(Guid id);
     }
 }

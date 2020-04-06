@@ -20,7 +20,7 @@ namespace QuizApplication.Repositories
 
 
 
-        public async Task<Answer> GetAnswerByQuestionAsync(int id)
+        public async Task<Answer> GetAnswerByQuestionAsync(Guid id)
         {
 			try
 			{

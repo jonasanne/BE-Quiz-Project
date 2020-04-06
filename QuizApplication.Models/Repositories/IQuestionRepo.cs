@@ -9,7 +9,7 @@ namespace QuizApplication.Repositories
     public interface IQuestionRepo
     {
         Task<IEnumerable<Question>> GetQuestionsAsync();
-        Task<IEnumerable<Question>> GetQuestionsByIdAsync(int id);
+        //Task<IEnumerable<Question>> GetQuestionsByIdAsync(int id);
 
 
     }

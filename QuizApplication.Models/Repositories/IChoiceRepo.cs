@@ -8,6 +8,6 @@ namespace QuizApplication.Repositories
 {
     public interface IChoiceRepo
     {
-        Task<IEnumerable<Choice>> GetChoicesAsync(int QuestionId);
+        Task<IEnumerable<Choice>> GetChoicesAsync(Guid QuestionId);
     }
 }
