@@ -100,5 +100,20 @@ namespace QuizApplication.Repositories
             return;
         }
 
+        public async Task<Quiz> Update(Quiz quiz)
+        {
+            try
+            {
+                context.Quizzes.Update(quiz);
+                await context.SaveChangesAsync();
+                return quiz;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.InnerException.Message);
+                throw null;
+
+            }
+        }
     }
 }

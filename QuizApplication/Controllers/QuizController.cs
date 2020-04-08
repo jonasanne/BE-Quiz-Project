@@ -27,9 +27,10 @@ namespace QuizApplication.WebApp.Controllers
         }
 
         // GET: Quiz/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> DetailsAsync(Guid id)
         {
-            return View();
+            var quiz = await quizRepo.GetQuizByIdAsync(id);
+            return View(quiz);
         }
 
         // GET: Quiz/Create
@@ -55,7 +56,7 @@ namespace QuizApplication.WebApp.Controllers
                 {
                     throw new Exception("Invalid Entry");
                 }
-                return RedirectToAction(nameof(IndexAsync));
+                return RedirectToAction(nameof(Index));
 
             }
             catch (Exception ex)
@@ -68,25 +69,40 @@ namespace QuizApplication.WebApp.Controllers
         }
 
         // GET: Quiz/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> EditAsync(Guid id)
         {
-            return View();
+            if (id == null)
+                return Redirect("/Error/400");
+
+            var quiz = await quizRepo.GetQuizByIdAsync(id);
+            if (quiz == null){
+                ModelState.AddModelError(String.Empty, "Not Found.");
+            }
+            return View(quiz);
         }
 
         // POST: Quiz/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> EditAsync(int id, IFormCollection collection, Quiz quiz)
         {
             try
             {
                 // TODO: Add update logic here
+                if (id == null)
+                    return BadRequest();
 
+                var result = await quizRepo.Update(quiz);
+                if (result == null)
+                    return Redirect("/Error/400");
+                
+                
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ModelState.AddModelError("", "Update actie mislukt." + ex.InnerException.Message);
+                return View(quiz);
             }
         }
 

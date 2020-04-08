@@ -22,6 +22,7 @@ namespace QuizApplication.Repositories
         Task<Quiz> GetQuizByIdAsync(Guid Id);
         Task<Quiz> AddQuiz(Quiz quiz);
         Task DeleteQuiz(Guid id);
+        Task<Quiz> Update(Quiz quiz);
 
 
 
