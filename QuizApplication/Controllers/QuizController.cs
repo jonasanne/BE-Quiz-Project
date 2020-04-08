@@ -1,154 +1,129 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using QuizApplication.Data;
 using QuizApplication.Models;
+using QuizApplication.Repositories;
 
 namespace QuizApplication.WebApp.Controllers
 {
     public class QuizController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IQuizRepo quizRepo;
 
-        public QuizController(ApplicationDbContext context)
+        public QuizController(IQuizRepo quizRepo)
         {
-            _context = context;
+            this.quizRepo = quizRepo;
         }
 
         // GET: Quiz
-        public async Task<IActionResult> Index()
+        public async Task<ActionResult> IndexAsync()
         {
-            return View(await _context.Quizzes.ToListAsync());
+            var quizzes = await quizRepo.GetQuizzesAsync();
+            return View(quizzes);
         }
 
         // GET: Quiz/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var quiz = await _context.Quizzes
-                .FirstOrDefaultAsync(m => m.QuizID == id);
-            if (quiz == null)
-            {
-                return NotFound();
-            }
-
-            return View(quiz);
+            return View();
         }
 
         // GET: Quiz/Create
-        public IActionResult Create()
+        public ActionResult Create()
         {
             return View();
         }
 
         // POST: Quiz/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("QuizID,QuizName,Difficulty")] Quiz quiz)
+        public async Task<ActionResult> CreateAsync(IFormCollection collection, Quiz quiz)
         {
-            if (ModelState.IsValid)
+            try
             {
-                quiz.QuizID = Guid.NewGuid();
-                _context.Add(quiz);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (!ModelState.IsValid)
+                {
+                    throw new Exception("Validation Error");
+                }
+                Quiz result = await quizRepo.AddQuiz(quiz);
+
+                if (result == null)
+                {
+                    throw new Exception("Invalid Entry");
+                }
+                return RedirectToAction(nameof(IndexAsync));
+
             }
-            return View(quiz);
+            catch (Exception ex)
+            {
+
+                Debug.WriteLine("unable to create" + ex.Message);
+                ModelState.AddModelError("", "Create mislukt." + ex.Message);
+                return View(quiz);
+            }
         }
 
         // GET: Quiz/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var quiz = await _context.Quizzes.FindAsync(id);
-            if (quiz == null)
-            {
-                return NotFound();
-            }
-            return View(quiz);
+            return View();
         }
 
         // POST: Quiz/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("QuizID,QuizName,Difficulty")] Quiz quiz)
+        public ActionResult Edit(int id, IFormCollection collection)
         {
-            if (id != quiz.QuizID)
+            try
             {
-                return NotFound();
-            }
+                // TODO: Add update logic here
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(quiz);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!QuizExists(quiz.QuizID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
                 return RedirectToAction(nameof(Index));
             }
-            return View(quiz);
+            catch
+            {
+                return View();
+            }
         }
 
         // GET: Quiz/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<ActionResult> DeleteAsync(Guid id)
         {
             if (id == null)
             {
+                return BadRequest();
+            }
+            var teacher = await quizRepo.GetQuizByIdAsync(id);
+            if (teacher == null) {
                 return NotFound();
             }
-
-            var quiz = await _context.Quizzes
-                .FirstOrDefaultAsync(m => m.QuizID == id);
-            if (quiz == null)
-            {
-                return NotFound();
-            }
-
-            return View(quiz);
+            return View(teacher);
         }
 
         // POST: Quiz/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async  Task<ActionResult> Delete(Guid id, IFormCollection collection)
         {
-            var quiz = await _context.Quizzes.FindAsync(id);
-            _context.Quizzes.Remove(quiz);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            try
+            {
+                // TODO: Add delete logic here
+                if (id == null)
+                    throw new Exception("Bad Delete Request");
+                await quizRepo.DeleteQuiz(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
 
-        private bool QuizExists(Guid id)
-        {
-            return _context.Quizzes.Any(e => e.QuizID == id);
+                Debug.WriteLine($"Delete error. " + ex.Message);
+                ModelState.AddModelError(String.Empty, "Delete failed");
+                return View();
+            }     
         }
     }
 }

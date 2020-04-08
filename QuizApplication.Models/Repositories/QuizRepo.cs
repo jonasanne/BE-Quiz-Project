@@ -66,6 +66,7 @@ namespace QuizApplication.Repositories
         {
             try
             {
+                quiz.QuizID = Guid.NewGuid();
                 var result = context.Quizzes.AddAsync(quiz);//ChangeTracking
                 await context.SaveChangesAsync();
                 return quiz; //heeft nu een id (autoidentity)
@@ -76,5 +77,28 @@ namespace QuizApplication.Repositories
                 return null;
             }
         }
+
+        public async Task DeleteQuiz(Guid Id)
+        {
+            try
+            {
+                Quiz quiz = await GetQuizByIdAsync(Id);
+
+                if (quiz == null)
+                {
+                    return;
+                }
+
+                var result = context.Quizzes.Remove(quiz);
+                ////doe hier een archivering van education ipv delete -> veiliger
+                await context.SaveChangesAsync();
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+            }
+            return;
+        }
+
     }
 }
