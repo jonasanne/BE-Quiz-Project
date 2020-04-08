@@ -20,6 +20,7 @@ namespace QuizApplication.Repositories
         /// <returns></returns>
         Task<Quiz> GetQuizByDifficultyAsync(int difficulty);
         Task<Quiz> GetQuizByIdAsync(Guid Id);
+        Task<Quiz> AddQuiz(Quiz quiz);
 
 
 

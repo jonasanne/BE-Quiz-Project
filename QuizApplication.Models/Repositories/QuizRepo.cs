@@ -61,5 +61,20 @@ namespace QuizApplication.Repositories
                 throw null;
             }
         }
+
+        public async Task<Quiz> AddQuiz(Quiz quiz)
+        {
+            try
+            {
+                var result = context.Quizzes.AddAsync(quiz);//ChangeTracking
+                await context.SaveChangesAsync();
+                return quiz; //heeft nu een id (autoidentity)
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.InnerException.Message);
+                return null;
+            }
+        }
     }
 }

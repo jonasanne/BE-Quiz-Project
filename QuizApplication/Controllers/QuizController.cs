@@ -2,108 +2,153 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using QuizApplication.Data;
 using QuizApplication.Models;
-using QuizApplication.Repositories;
 
 namespace QuizApplication.WebApp.Controllers
 {
     public class QuizController : Controller
     {
-        private readonly IQuizRepo quizRepo;
+        private readonly ApplicationDbContext _context;
 
-        public QuizController(IQuizRepo quizRepo)
+        public QuizController(ApplicationDbContext context)
         {
-            this.quizRepo = quizRepo;
+            _context = context;
         }
 
         // GET: Quiz
-        public async Task<ActionResult> IndexAsync()
+        public async Task<IActionResult> Index()
         {
-
-            IEnumerable<Quiz> quizzes= null;
-            quizzes = await quizRepo.GetQuizzesAsync();
-            if (quizzes == null)
-                return Redirect("/Error/400");
-
-            return View(quizzes);
+            return View(await _context.Quizzes.ToListAsync());
         }
 
         // GET: Quiz/Details/5
-        public async Task<ActionResult> DetailsAsync(Guid Id)
+        public async Task<IActionResult> Details(Guid? id)
         {
-            var quiz = await quizRepo.GetQuizByIdAsync(Id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var quiz = await _context.Quizzes
+                .FirstOrDefaultAsync(m => m.QuizID == id);
+            if (quiz == null)
+            {
+                return NotFound();
+            }
+
             return View(quiz);
         }
 
         // GET: Quiz/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
 
         // POST: Quiz/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create([Bind("QuizID,QuizName,Difficulty")] Quiz quiz)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(IndexAsync));
+                quiz.QuizID = Guid.NewGuid();
+                _context.Add(quiz);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(quiz);
         }
 
         // GET: Quiz/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var quiz = await _context.Quizzes.FindAsync(id);
+            if (quiz == null)
+            {
+                return NotFound();
+            }
+            return View(quiz);
         }
 
         // POST: Quiz/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(Guid id, [Bind("QuizID,QuizName,Difficulty")] Quiz quiz)
         {
-            try
+            if (id != quiz.QuizID)
             {
-                // TODO: Add update logic here
+                return NotFound();
+            }
 
-                return RedirectToAction(nameof(IndexAsync));
-            }
-            catch
+            if (ModelState.IsValid)
             {
-                return View();
+                try
+                {
+                    _context.Update(quiz);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!QuizExists(quiz.QuizID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
             }
+            return View(quiz);
         }
 
         // GET: Quiz/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var quiz = await _context.Quizzes
+                .FirstOrDefaultAsync(m => m.QuizID == id);
+            if (quiz == null)
+            {
+                return NotFound();
+            }
+
+            return View(quiz);
         }
 
         // POST: Quiz/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            var quiz = await _context.Quizzes.FindAsync(id);
+            _context.Quizzes.Remove(quiz);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
-                return RedirectToAction(nameof(IndexAsync));
-            }
-            catch
-            {
-                return View();
-            }
+        private bool QuizExists(Guid id)
+        {
+            return _context.Quizzes.Any(e => e.QuizID == id);
         }
     }
 }
