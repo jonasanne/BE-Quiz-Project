@@ -12,6 +12,7 @@ namespace QuizApplication.Models
         public Guid QuizID { get; set; } = Guid.NewGuid();
 
         [MaxLength(150)]
+        [Required]
         public string QuizName { get; set; }
 
         [Required]
