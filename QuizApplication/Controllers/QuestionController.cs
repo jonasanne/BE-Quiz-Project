@@ -10,35 +10,38 @@ using QuizApplication.Repositories;
 
 namespace QuizApplication.WebApp.Controllers
 {
-    public class QuizController : Controller
+    public class QuestionController : Controller
     {
-        private readonly IQuizRepo quizRepo;
+        private readonly IQuestionRepo questionRepo;
 
-        public QuizController(IQuizRepo quizRepo)
+        public QuestionController(IQuestionRepo questionRepo)
         {
-            this.quizRepo = quizRepo;
+            this.questionRepo = questionRepo;
         }
-        // GET: Quiz
+        // GET: Question
         public async Task<ActionResult> IndexAsync()
         {
-            var quizzes = await quizRepo.GetQuizzesAsync();
-            return View(quizzes);
+            var questions = await questionRepo.GetQuestionsAsync();
+            return View(questions);
         }
-        // GET: Quiz/Details/5
+
+        // GET: Question/Details/5
         public async Task<ActionResult> DetailsAsync(Guid id)
         {
-            var quiz = await quizRepo.GetQuizByIdAsync(id);
-            return View(quiz);
+            var question = await questionRepo.GetQuestionByIdAsync(id);
+            return View(question);
         }
-        // GET: Quiz/Create
+
+        // GET: Question/Create
         public ActionResult Create()
         {
             return View();
         }
-        // POST: Quiz/Create
+
+        // POST: Question/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateAsync(IFormCollection collection, Quiz quiz)
+        public async Task<ActionResult> CreateAsync(IFormCollection collection, Question question)
         {
             try
             {
@@ -46,7 +49,7 @@ namespace QuizApplication.WebApp.Controllers
                 {
                     throw new Exception("Validation Error");
                 }
-                Quiz result = await quizRepo.AddQuiz(quiz);
+                Question result = await questionRepo.AddQuestion(question);
 
                 if (result == null)
                 {
@@ -60,25 +63,28 @@ namespace QuizApplication.WebApp.Controllers
 
                 Debug.WriteLine("unable to create" + ex.Message);
                 ModelState.AddModelError("", "Create mislukt." + ex.Message);
-                return View(quiz);
+                return View(question);
             }
         }
-        // GET: Quiz/Edit/5
+
+        // GET: Question/Edit/5
         public async Task<ActionResult> EditAsync(Guid id)
         {
             if (id == null)
                 return Redirect("/Error/400");
 
-            var quiz = await quizRepo.GetQuizByIdAsync(id);
-            if (quiz == null){
+            var question = await questionRepo.GetQuestionByIdAsync(id);
+            if (question == null)
+            {
                 ModelState.AddModelError(String.Empty, "Not Found.");
             }
-            return View(quiz);
+            return View(question);
         }
-        // POST: Quiz/Edit/5
+
+        // POST: Question/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditAsync(Guid id, IFormCollection collection, Quiz quiz)
+        public async Task<ActionResult> EditAsync(Guid id, IFormCollection collection, Question question)
         {
             try
             {
@@ -86,43 +92,46 @@ namespace QuizApplication.WebApp.Controllers
                 if (id == null)
                     return BadRequest();
 
-                var result = await quizRepo.Update(quiz);
+                var result = await questionRepo.Update(question);
                 if (result == null)
                     return Redirect("/Error/400");
-                
-                
+
+
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("", "Update actie mislukt." + ex.InnerException.Message);
-                return View(quiz);
+                return View(question);
             }
         }
-        // GET: Quiz/Delete/5
+
+        // GET: Question/Delete/5
         public async Task<ActionResult> DeleteAsync(Guid id)
         {
             if (id == null)
             {
                 return BadRequest();
             }
-            var quiz = await quizRepo.GetQuizByIdAsync(id);
-            if (quiz == null) {
+            var question = await questionRepo.GetQuestionByIdAsync(id);
+            if (question == null)
+            {
                 return NotFound();
             }
-            return View(quiz);
+            return View(question);
         }
-        // POST: Quiz/Delete/5
+
+        // POST: Question/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async  Task<ActionResult> Delete(Guid id, IFormCollection collection)
+        public async Task<ActionResult> DeleteAsync(Guid id, IFormCollection collection)
         {
             try
             {
                 // TODO: Add delete logic here
                 if (id == null)
                     throw new Exception("Bad Delete Request");
-                await quizRepo.DeleteQuiz(id);
+                await questionRepo.DeleteQuestion(id);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -131,7 +140,7 @@ namespace QuizApplication.WebApp.Controllers
                 Debug.WriteLine($"Delete error. " + ex.Message);
                 ModelState.AddModelError(String.Empty, "Delete failed");
                 return View();
-            }     
+            }
         }
     }
 }
