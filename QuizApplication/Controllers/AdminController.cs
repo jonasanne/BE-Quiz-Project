@@ -1,99 +1,123 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using QuizApplication.Models;
+using QuizApplication.WebApp.ViewModels;
 
 namespace QuizApplication.WebApp.Controllers
 {
     public class AdminController : Controller
     {
-        public AdminController()
+        private readonly UserManager<Person> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+
+        public AdminController(UserManager<Person> userManager, RoleManager<IdentityRole> roleManager)
         {
+            this._userManager = userManager;
+            this._roleManager = roleManager;
         }
 
-        // GET: Admin
-        [Authorize(Roles = "Admin")]
+        // GET: show all users
+        //[Authorize(Roles = "Admin")]
+
         public ActionResult IndexUsers()
         {
-            return View();
+            var users = _userManager.Users;
+            return View(users);
         }
 
         // GET: Admin/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+        //[Authorize(Roles = "Admin")]
 
-        // GET: Admin/Create
-        public ActionResult Create()
+        public ActionResult Indexroles()
         {
-            return View();
+            var roles = _roleManager.Roles;
+            return View(roles);
         }
+        // GET: Admin/Details/5
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
 
-        // POST: Admin/Create
+        public IActionResult CreateRole() => View();
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
+        [Authorize(Roles = "Admin")]
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Admin/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> CreateRole(AddRole_VM addRoleVM)
         {
+            if (!ModelState.IsValid) return View(addRoleVM);
+            var role = new IdentityRole
+            {
+                Name = addRoleVM.RoleName
+            };
+
+            IdentityResult result = await _roleManager.CreateAsync(role);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("IndexRoles", _roleManager.Roles);
+            }
             return View();
         }
 
-        // POST: Admin/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AddRoleToUser(string userId)
+        {
+            Person user = new Person();
+
+            if (!string.IsNullOrEmpty(userId))
             {
-                return View();
+                user = await _userManager.FindByIdAsync(userId);
             }
+            if (user == null)
+                return RedirectToAction("IndexRoles", _roleManager.Roles);
+
+
+            //reeds toegekende rollen
+            var assignRolesToUserVM = new RolesForUser_VM()
+            {
+                AssignedRoles = await _userManager.GetRolesAsync(user),
+                UnAssignedRoles = new List<string>(),
+                User = user,
+                UserId = userId
+            };
+
+            //nog niet toegekende rollen
+            foreach (var identityRole in _roleManager.Roles)
+            {
+                if (!await _userManager.IsInRoleAsync(user, identityRole.Name))
+                {
+                    assignRolesToUserVM.UnAssignedRoles.Add(identityRole.Name);
+                }
+            }
+
+            return View(assignRolesToUserVM);
+
         }
 
-        // GET: Admin/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Admin/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AddRoleToUser(RolesForUser_VM rolesForUserVM)
         {
-            try
+            var user = await _userManager.FindByIdAsync(rolesForUserVM.UserId);
+            var role = await _roleManager.FindByNameAsync(rolesForUserVM.RoleId);
+            var result = await _userManager.AddToRoleAsync(user, role.Name);
+            if (result.Succeeded)
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("IndexUsers", _roleManager.Roles);
             }
-            catch
+            else
             {
-                return View();
+                Debug.WriteLine(result.Errors);
             }
+            return View(rolesForUserVM);
         }
     }
 }

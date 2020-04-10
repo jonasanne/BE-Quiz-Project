@@ -165,7 +165,6 @@ D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\bin\Debug\netcoreapp
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Quiz\DetailsAsync.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Quiz\Index.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\bin\Debug\netcoreapp3.1\Microsoft.Data.Sqlite.dll
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\bin\Debug\netcoreapp3.1\Microsoft.DotNet.PlatformAbstractions.dll
@@ -189,7 +188,6 @@ D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\bin\Debug\netcoreapp
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\e_sqlite3.dll
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\QuizApplication.WebApp.MvcApplicationPartsAssemblyInfo.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\QuizApplication.WebApp.MvcApplicationPartsAssemblyInfo.cache
-D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Quiz\Create.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Quiz\Delete.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Quiz\Details.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Quiz\Edit.cshtml.g.cs
@@ -198,3 +196,6 @@ D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Question\Create.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Question\Edit.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Question\Delete.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Quiz\Create.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Indexroles.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Admin\IndexUsers.cshtml.g.cs

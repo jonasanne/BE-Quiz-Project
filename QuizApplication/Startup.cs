@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using QuizApplication.Models;
 using QuizApplication.Data;
 using QuizApplication.Repositories;
+using QuizApplication.Models.Data;
 
 namespace QuizApplication
 {
@@ -29,23 +30,28 @@ namespace QuizApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+
+            services.AddDefaultIdentity<Person>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddControllersWithViews();
             services.AddRazorPages();
 
             //registreren
             services.AddScoped<IQuizRepo, QuizRepo>();
             services.AddScoped<IQuestionRepo, QuestionRepo>();
 
+       
+
+
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<IdentityRole> roleMgr, UserManager<Person> userMgr, ApplicationDbContext dbContext)
         {
             if (env.IsDevelopment())
             {
@@ -73,6 +79,9 @@ namespace QuizApplication
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+            //seeden van users en roles
+            ApplicationDbContextExtensions.SeedRolesAsync(roleMgr).Wait();
+            //ApplicationDbContextExtensions.SeedUsersAsync(userMgr).Wait();
         }
     }
 }
