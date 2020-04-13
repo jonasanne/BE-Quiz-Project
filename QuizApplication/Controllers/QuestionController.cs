@@ -7,21 +7,28 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QuizApplication.Models;
 using QuizApplication.Repositories;
+using QuizApplication.WebApp.ViewModels;
 
 namespace QuizApplication.WebApp.Controllers
 {
     public class QuestionController : Controller
     {
         private readonly IQuestionRepo questionRepo;
+        private readonly IQuizRepo quizRepo;
+        private readonly IAnswerRepo answerRepo;
+        private readonly IChoiceRepo choiceRepo;
 
-        public QuestionController(IQuestionRepo questionRepo)
+        public QuestionController(IQuestionRepo questionRepo, IQuizRepo quizRepo, IAnswerRepo answerRepo, IChoiceRepo choiceRepo)
         {
             this.questionRepo = questionRepo;
+            this.quizRepo = quizRepo;
+            this.answerRepo = answerRepo;
+            this.choiceRepo = choiceRepo;
         }
         // GET: Question
-        public async Task<ActionResult> IndexAsync()
+        public async Task<ActionResult> IndexAsync( Guid Id)
         {
-            var questions = await questionRepo.GetQuestionsAsync();
+            var questions = await questionRepo.GetQuestionsByQuizAsync(Id);
             return View(questions);
         }
 
@@ -33,15 +40,19 @@ namespace QuizApplication.WebApp.Controllers
         }
 
         // GET: Question/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create(Guid Id)
         {
-            return View();
+            Quiz quiz = await quizRepo.GetQuizByIdAsync(Id);
+            ViewBag.Quiz = quiz;
+            AddQuestion_VM vm = new AddQuestion_VM();
+            vm.QuizId = quiz.QuizID;
+            return View(vm);
         }
 
         // POST: Question/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateAsync(IFormCollection collection, Question question)
+        public  async Task<IActionResult> CreateAsync(IFormCollection collection, AddQuestion_VM vm )
         {
             try
             {
@@ -49,12 +60,62 @@ namespace QuizApplication.WebApp.Controllers
                 {
                     throw new Exception("Validation Error");
                 }
-                Question result = await questionRepo.AddQuestion(question);
+                //add question
+                Question question = new Question()
+                {
+                    QuizId = vm.QuizId,
+                    QuestionId = Guid.NewGuid(),
+                    QuestionText = vm.QuestionText
+                };
 
+                var result = questionRepo.AddQuestion(question);
                 if (result == null)
                 {
-                    throw new Exception("Invalid Entry");
+                    return Redirect("/Error/400");
                 }
+
+                //add answer
+                Answer answer = new Answer()
+                {
+                    AnswerID = Guid.NewGuid(),
+                    AnswerText = vm.QuestionAnswer,
+                    QuestionID = question.QuestionId
+                };
+                var resultAnswer = answerRepo.AddAnswer(answer);
+                if (resultAnswer == null)
+                    return Redirect("/Error/400");
+
+
+                //add choice 1
+                Choice choiceA = new Choice()
+                {
+                    ChoiceID = Guid.NewGuid(),
+                    ChoiceText = vm.QuestionChoiceA,
+                    QuestionID = question.QuestionId
+                };
+                var resultChoiceA = choiceRepo.AddChoice(choiceA);
+                if (resultChoiceA == null)
+                    return Redirect("/Error/400");
+                //add choice 2
+                Choice choiceB = new Choice()
+                {
+                    ChoiceID = Guid.NewGuid(),
+                    ChoiceText = vm.QuestionChoiceB,
+                    QuestionID = question.QuestionId
+                };
+                var resultChoiceB = choiceRepo.AddChoice(choiceB);
+                if (resultChoiceB == null)
+                    return Redirect("/Error/400");
+                //add choice 2
+                Choice choiceC = new Choice()
+                {
+                    ChoiceID = Guid.NewGuid(),
+                    ChoiceText = vm.QuestionChoiceC,
+                    QuestionID = question.QuestionId
+                };
+                var resultChoiceC = choiceRepo.AddChoice(choiceC);
+                if (resultChoiceC == null)
+                    return Redirect("/Error/400");
                 return RedirectToAction(nameof(Index));
 
             }
@@ -63,7 +124,7 @@ namespace QuizApplication.WebApp.Controllers
 
                 Debug.WriteLine("unable to create" + ex.Message);
                 ModelState.AddModelError("", "Create mislukt." + ex.Message);
-                return View(question);
+                return View(vm);
             }
         }
 

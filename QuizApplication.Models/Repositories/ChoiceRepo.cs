@@ -17,6 +17,23 @@ namespace QuizApplication.Repositories
         {
             this.context = context;
         }
+
+        public async Task<Choice> AddChoice(Choice choice)
+        {
+            try
+            {
+                choice.ChoiceID = Guid.NewGuid();
+                var result = context.Choices.AddAsync(choice);
+                await context.SaveChangesAsync();
+                return choice;
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.InnerException.Message);
+                return null;
+            }
+        }
+
         public async Task<IEnumerable<Choice>> GetChoicesAsync(Guid QuestionId) { 
             try
             {

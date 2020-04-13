@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace QuizApplication.Models.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,8 +51,10 @@ namespace QuizApplication.Models.Migrations
                 columns: table => new
                 {
                     QuizID = table.Column<Guid>(nullable: false),
-                    QuizName = table.Column<string>(maxLength: 150, nullable: true),
-                    Difficulty = table.Column<int>(nullable: false)
+                    QuizName = table.Column<string>(maxLength: 150, nullable: false),
+                    Difficulty = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(maxLength: 200, nullable: true),
+                    ImgUrl = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -71,7 +73,6 @@ namespace QuizApplication.Models.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Scores", x => x.ScoreId);
-                   
                 });
 
             migrationBuilder.CreateTable(

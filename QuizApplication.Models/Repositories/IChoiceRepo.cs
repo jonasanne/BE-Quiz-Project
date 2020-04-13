@@ -9,5 +9,7 @@ namespace QuizApplication.Repositories
     public interface IChoiceRepo
     {
         Task<IEnumerable<Choice>> GetChoicesAsync(Guid QuestionId);
+        Task<Choice> AddChoice(Choice choice);
+
     }
 }

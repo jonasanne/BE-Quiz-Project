@@ -10,5 +10,6 @@ namespace QuizApplication.Repositories
     {
 
         Task<Answer> GetAnswerByQuestionAsync(Guid id);
+        Task<Answer> AddAnswer(Answer answer);
     }
 }

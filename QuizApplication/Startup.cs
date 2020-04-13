@@ -34,7 +34,9 @@ namespace QuizApplication
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<Person>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>()
+
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
@@ -43,15 +45,12 @@ namespace QuizApplication
             //registreren
             services.AddScoped<IQuizRepo, QuizRepo>();
             services.AddScoped<IQuestionRepo, QuestionRepo>();
-
-       
-
-
-
+            services.AddScoped<IAnswerRepo, AnswerRepo>();
+            services.AddScoped<IChoiceRepo, ChoiceRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<IdentityRole> roleMgr, UserManager<Person> userMgr, ApplicationDbContext dbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<IdentityRole> roleMgr, UserManager<IdentityUser> userMgr, ApplicationDbContext dbContext)
         {
             if (env.IsDevelopment())
             {
@@ -81,7 +80,7 @@ namespace QuizApplication
             });
             //seeden van users en roles
             ApplicationDbContextExtensions.SeedRolesAsync(roleMgr).Wait();
-            //ApplicationDbContextExtensions.SeedUsersAsync(userMgr).Wait();
+            ApplicationDbContextExtensions.SeedUsersAsync(userMgr).Wait();
         }
     }
 }

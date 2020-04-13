@@ -1,31 +1,47 @@
 ﻿@model QuizApplication.Models.Quiz
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>Quiz</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.QuizName)
-        </dt>
-        <dd class = "col-sm-10">
+
+<div class="detailpage">
+    <main class="mainDetail">
+        <h1>
             @Html.DisplayFor(model => model.QuizName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Difficulty)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Difficulty)
-        </dd>
-    </dl>
+        </h1>
+
+        <p class="descriptionDetail">
+            @Html.DisplayFor(model => model.Description)
+        </p>
+        <div class="extra">
+            <p style="align-self: flex-start; margin: 0;">Difficulty: Beginner</p>
+            @if (User.IsInRole("Admin"))
+            {
+        <div style="display:flex; flex-direction:column;">
+            <a asp-action="Edit" asp-route-id="@Model.QuizID">Edit quiz</a>
+            <a asp-action="Index" asp-controller="Question" asp-route-id="@Model.QuizID">Questions</a>
+        </div>
+            }
+        </div>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <button type="button" class="btn btn-primary btn-lg btn-block"
+                    style="max-width: 400px;background-color: rgb(0, 81, 255); margin-bottom:5px;">
+                Play quiz!
+            </button>
+        }
+
+    </main>
+
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.QuizID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+
+
+
+
+

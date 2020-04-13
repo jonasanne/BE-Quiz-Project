@@ -17,5 +17,8 @@ namespace QuizApplication.Models
 
         [Required]
         public int Difficulty { get; set; } // 1 , 2, 3
+        [MaxLength(200)]
+        public string Description { get; set; } 
+        public string ImgUrl { get; set; } 
     }
 }

@@ -8,8 +8,11 @@ namespace QuizApplication.Repositories
 {
     public interface IQuestionRepo
     {
-        Task<IEnumerable<Question>> GetQuestionsAsync();
-        //Task<IEnumerable<Question>> GetQuestionsByIdAsync(int id);
+        Task<IEnumerable<Question>> GetQuestionsByQuizAsync(Guid Id);
+        Task<Question> GetQuestionByIdAsync(Guid id);
+        Task<Question> AddQuestion(Question question);
+        Task DeleteQuestion(Guid Id);
+        Task<Question> Update(Question question);
 
 
     }

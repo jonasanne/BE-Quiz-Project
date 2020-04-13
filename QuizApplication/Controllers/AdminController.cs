@@ -14,17 +14,17 @@ namespace QuizApplication.WebApp.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly UserManager<Person> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AdminController(UserManager<Person> userManager, RoleManager<IdentityRole> roleManager)
+        public AdminController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             this._userManager = userManager;
             this._roleManager = roleManager;
         }
 
         // GET: show all users
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
 
         public ActionResult IndexUsers()
         {
@@ -33,7 +33,7 @@ namespace QuizApplication.WebApp.Controllers
         }
 
         // GET: Admin/Details/5
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
 
         public ActionResult Indexroles()
         {
@@ -70,7 +70,7 @@ namespace QuizApplication.WebApp.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddRoleToUser(string userId)
         {
-            Person user = new Person();
+            IdentityUser user = new IdentityUser();
 
             if (!string.IsNullOrEmpty(userId))
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QuizApplication.Models;
@@ -31,6 +32,8 @@ namespace QuizApplication.WebApp.Controllers
             return View(quiz);
         }
         // GET: Quiz/Create
+        [Authorize(Roles = "Admin")]
+
         public ActionResult Create()
         {
             return View();
@@ -38,6 +41,7 @@ namespace QuizApplication.WebApp.Controllers
         // POST: Quiz/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> CreateAsync(IFormCollection collection, Quiz quiz)
         {
             try
@@ -64,6 +68,7 @@ namespace QuizApplication.WebApp.Controllers
             }
         }
         // GET: Quiz/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> EditAsync(Guid id)
         {
             if (id == null)
@@ -78,6 +83,8 @@ namespace QuizApplication.WebApp.Controllers
         // POST: Quiz/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+
         public async Task<ActionResult> EditAsync(Guid id, IFormCollection collection, Quiz quiz)
         {
             try
@@ -99,7 +106,9 @@ namespace QuizApplication.WebApp.Controllers
                 return View(quiz);
             }
         }
+
         // GET: Quiz/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteAsync(Guid id)
         {
             if (id == null)
@@ -113,6 +122,7 @@ namespace QuizApplication.WebApp.Controllers
             return View(quiz);
         }
         // POST: Quiz/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async  Task<ActionResult> Delete(Guid id, IFormCollection collection)

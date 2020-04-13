@@ -18,9 +18,23 @@ namespace QuizApplication.Repositories
 			this.context = context;
 		}
 
+		public async Task<Answer> AddAnswer(Answer answer)
+		{
+			try
+			{
+				answer.AnswerID = Guid.NewGuid();
+				var result = context.Answers.AddAsync(answer);
+				await context.SaveChangesAsync();
+				return answer;
+			}
+			catch (Exception exc)
+			{
+				Console.WriteLine(exc.InnerException.Message);
+				return null;
+			}
+		}
 
-
-        public async Task<Answer> GetAnswerByQuestionAsync(Guid id)
+		public async Task<Answer> GetAnswerByQuestionAsync(Guid id)
         {
 			try
 			{

@@ -5,15 +5,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Quizzes</h1>
-
-@*@if ( User.IsInRole("Admin"))
-{*@
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-@* } *@
-
+    <div class="container">
+        @if (User.IsInRole("Admin"))
+        {
+            <p>
+                <a asp-action="Create">Create New</a>
+            </p>
+        }
+    </div>
 
 <div class="cards">
     @foreach (var item in Model)

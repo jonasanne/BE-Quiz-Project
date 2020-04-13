@@ -190,12 +190,10 @@ D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\QuizApplication.WebApp.MvcApplicationPartsAssemblyInfo.cache
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Quiz\Delete.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Quiz\Details.cshtml.g.cs
-D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Quiz\Edit.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Question\Index.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Question\DetailsAsync.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Question\Create.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Question\Edit.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Question\Delete.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Quiz\Create.cshtml.g.cs
-D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Indexroles.cshtml.g.cs
-D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Admin\IndexUsers.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Quiz\Edit.cshtml.g.cs

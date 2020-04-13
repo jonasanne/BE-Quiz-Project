@@ -13,6 +13,9 @@ namespace QuizApplication.Models
 
         [Required]
         public string QuestionText { get; set; }
+
+        //[Required]
+        //public int QuestionType { get; set; }
         
         [Required]
         public Guid QuizId { get; set; }
