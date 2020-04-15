@@ -298,7 +298,12 @@ namespace QuizApplication.Models.Migrations
                         .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("QuizID");
+
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("Quizzes");
                 });
@@ -321,6 +326,23 @@ namespace QuizApplication.Models.Migrations
                     b.HasKey("ScoreId");
 
                     b.ToTable("Scores");
+                });
+
+            modelBuilder.Entity("QuizApplication.Models.Subject", b =>
+                {
+                    b.Property<Guid>("SubjectId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SubjectName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SubjectId");
+
+                    b.ToTable("Subjects");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -397,6 +419,15 @@ namespace QuizApplication.Models.Migrations
                     b.HasOne("QuizApplication.Models.Quiz", "Quiz")
                         .WithMany()
                         .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("QuizApplication.Models.Quiz", b =>
+                {
+                    b.HasOne("QuizApplication.Models.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

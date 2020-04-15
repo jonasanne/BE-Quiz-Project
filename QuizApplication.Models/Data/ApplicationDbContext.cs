@@ -21,6 +21,7 @@ namespace QuizApplication.Data
         public virtual DbSet<Answer> Answers { get; set; }
         public virtual DbSet<Choice> Choices { get; set; }
         public virtual DbSet<Score> Scores { get; set; }
+        public virtual DbSet<Subject> Subjects { get; set; }
 
 
         //fluent api

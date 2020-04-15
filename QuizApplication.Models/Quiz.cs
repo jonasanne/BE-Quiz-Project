@@ -20,5 +20,10 @@ namespace QuizApplication.Models
         [MaxLength(200)]
         public string Description { get; set; } 
         public string ImgUrl { get; set; } 
+        public Guid SubjectId { get; set; }
+
+
+        //navgiation properties
+        public Subject Subject { get; set; }
     }
 }

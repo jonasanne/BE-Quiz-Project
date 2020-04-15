@@ -81,6 +81,8 @@ namespace QuizApplication
             //seeden van users en roles
             ApplicationDbContextExtensions.SeedRolesAsync(roleMgr).Wait();
             ApplicationDbContextExtensions.SeedUsersAsync(userMgr).Wait();
+            ApplicationDbContextExtensions.SeedData(dbContext).Wait();
+
         }
     }
 }

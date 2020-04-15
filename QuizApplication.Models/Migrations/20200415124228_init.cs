@@ -47,21 +47,6 @@ namespace QuizApplication.Models.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Quizzes",
-                columns: table => new
-                {
-                    QuizID = table.Column<Guid>(nullable: false),
-                    QuizName = table.Column<string>(maxLength: 150, nullable: false),
-                    Difficulty = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(maxLength: 200, nullable: true),
-                    ImgUrl = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Quizzes", x => x.QuizID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Scores",
                 columns: table => new
                 {
@@ -73,6 +58,19 @@ namespace QuizApplication.Models.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Scores", x => x.ScoreId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Subjects",
+                columns: table => new
+                {
+                    SubjectId = table.Column<Guid>(nullable: false),
+                    SubjectName = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subjects", x => x.SubjectId);
                 });
 
             migrationBuilder.CreateTable(
@@ -178,6 +176,28 @@ namespace QuizApplication.Models.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Quizzes",
+                columns: table => new
+                {
+                    QuizID = table.Column<Guid>(nullable: false),
+                    QuizName = table.Column<string>(maxLength: 150, nullable: false),
+                    Difficulty = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(maxLength: 200, nullable: true),
+                    ImgUrl = table.Column<string>(nullable: true),
+                    SubjectId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Quizzes", x => x.QuizID);
+                    table.ForeignKey(
+                        name: "FK_Quizzes_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subjects",
+                        principalColumn: "SubjectId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -291,6 +311,11 @@ namespace QuizApplication.Models.Migrations
                 name: "IX_Questions_QuizId",
                 table: "Questions",
                 column: "QuizId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Quizzes_SubjectId",
+                table: "Quizzes",
+                column: "SubjectId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -330,6 +355,9 @@ namespace QuizApplication.Models.Migrations
 
             migrationBuilder.DropTable(
                 name: "Quizzes");
+
+            migrationBuilder.DropTable(
+                name: "Subjects");
         }
     }
 }
