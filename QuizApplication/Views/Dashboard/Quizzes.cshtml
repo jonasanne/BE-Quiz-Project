@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "Quizzes";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<h1>Quizzes</h1>
+
+<div class="quizzes mt-5">
+
+    <div class="quiz add-quiz mr-3 mt-3">
+        <a  class="quiz-button-add" asp-action="CreateQuiz">
+            <ion-icon name="add" class="add-icon" size="large"></ion-icon>
+        </a>
+    </div>
+
+    @foreach (var item in Model)
+    {
+        <div class="quiz mr-3 mt-3">
+            <a  class="quiz-button bg-primary" asp-action="DetailQuiz"asp-route-id="@item.QuizID">
+                <img class="quiz-image" src="@item.ImgUrl" alt="">
+                <div class="quiz-name-container">
+                    <div class="quiz-name-bg"></div>
+                    <p class="quiz-name">@item.QuizName</p>
+                </div>
+            </a>
+        </div>
+    }
+</div>
+

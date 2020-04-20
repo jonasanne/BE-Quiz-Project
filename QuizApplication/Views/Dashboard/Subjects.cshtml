@@ -1,0 +1,52 @@
+﻿@model IEnumerable<QuizApplication.Models.Subject>
+@{
+    ViewData["Title"] = "Subjects";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<h1>Subjects</h1>
+<div class="c-app-table">
+    
+        <a class="btn btn-outline-primary mb-2 mt-2"  asp-action="CreateSubject">Create New</a>
+    
+    @if (Model == null)
+    {
+        <h2>Geen subjects aanwezig</h2>
+    }
+    else
+    {
+        <table class="table table-hover ">
+            <thead>
+                <tr class="table-primary table-header">
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SubjectName)
+
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.Description)
+
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.SubjectName</td>
+                        <td>@item.Description</td>
+                        <td>
+                            <a asp-action="EditSubject" asp-route-id="@item.SubjectId">Edit</a> |
+                            <a asp-action="DeleteSubject" asp-route-id="@item.SubjectId">Delete</a>
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+    }
+</div>
+

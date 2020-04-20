@@ -1,8 +1,16 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<main>
+    <div class="c-app-index">
+        <div class="index-text-container">
+            <h1 class="c-app-index-title">It's always fun to quiz! Go and show you are the smartest person in the world!</h1>
+            <h2 class="c-app-index-sub-title">
+                Sign up and try for free</h2>
+                <div class="buttons">
+                    <a  asp-area="Identity" asp-page="/Account/Register"type="button" class="btn btn-secondary btn-sign-in mt-3">Sign up</a>
+                </div>
+        </div>
+    </div>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+</main>

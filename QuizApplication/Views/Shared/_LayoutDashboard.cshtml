@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100%;">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,9 +10,10 @@
     <link rel="stylesheet" href="~/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/style.css" />
 </head>
-<body>
+
+<body style="height: 100%;" class="">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow ">
             <div class="container">
                 @*<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">QuizApplication</a>*@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -30,32 +32,36 @@
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="Quiz" asp-action="Index">Quizzes</a>
                         </li>
-                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Dashboard" asp-action="Subjects">Dashboard</a>
-                            </li>
-                        }
 
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+    <div class="c-app-container">
+        <aside class="c-app-aside">
+            <nav style="width: 100%;">
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item c-app-navigation-ul-item ">
+                        <a class="nav-link c-app-navigation-link " asp-controller="Dashboard" asp-action="Subjects">subjects</a>
+                    </li>
+
+                    <li class="nav-item c-app-navigation-ul-item">
+                        <a class="nav-link c-app-navigation-link" asp-controller="Dashboard" asp-action="Quizzes">Quiz</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="c-app">
             @RenderBody()
         </main>
     </div>
-
-    @*<footer class="border-top footer text-muted">
-            <div class="container">
-                &copy; 2020 - QuizApplication - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>
-        </footer>*@
+    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
+
 </html>

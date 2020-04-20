@@ -15,6 +15,7 @@ using QuizApplication.Models;
 using QuizApplication.Data;
 using QuizApplication.Repositories;
 using QuizApplication.Models.Data;
+using QuizApplication.Models.Repositories;
 
 namespace QuizApplication
 {
@@ -47,6 +48,7 @@ namespace QuizApplication
             services.AddScoped<IQuestionRepo, QuestionRepo>();
             services.AddScoped<IAnswerRepo, AnswerRepo>();
             services.AddScoped<IChoiceRepo, ChoiceRepo>();
+            services.AddScoped<ISubjectRepo, SubjectRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

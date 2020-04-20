@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<QuizApplication.Models.Question>
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Questions";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Questions</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table>
+<table class="table">
     <thead>
         <tr>
             <th>

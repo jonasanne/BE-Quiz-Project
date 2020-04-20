@@ -197,3 +197,14 @@ D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Question\Delete.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Quiz\Create.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Quiz\Edit.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutDashboard.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\EditSubject.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Subjects.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\DeleteSubject.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\CreateSubject.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Quizzes.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\EditQuiz.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\DetailQuiz.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\CreateQuiz.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\CreateQuestion.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Questions.cshtml.g.cs
