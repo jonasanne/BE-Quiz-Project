@@ -322,9 +322,6 @@ namespace QuizApplication.WebApp.Controllers
 
         ////            Questions          ////
 
-
-
-
         // GET: Dashboard/Questions/id
         public async Task<ActionResult> Questions(Guid Id)
         {
@@ -333,8 +330,6 @@ namespace QuizApplication.WebApp.Controllers
             var questions = await questionRepo.GetQuestionsByQuizAsync(Id);
             return View(questions);
         }
-
-
 
         //GET /dashboard/Question/Create
         public async Task<ActionResult> CreateQuestionAsync(Guid Id)
@@ -358,6 +353,7 @@ namespace QuizApplication.WebApp.Controllers
             }
 
         }
+        
         // POST: Question/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -394,7 +390,6 @@ namespace QuizApplication.WebApp.Controllers
                 if (resultAnswer == null)
                     return Redirect("/Error/400");
 
-
                 //add choice 1
                 Choice choiceA = new Choice()
                 {
@@ -425,7 +420,7 @@ namespace QuizApplication.WebApp.Controllers
                 var resultChoiceC = choiceRepo.AddChoice(choiceC);
                 if (resultChoiceC == null)
                     return Redirect("/Error/400");
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Questions", question.QuizId);
 
             }
             catch (Exception ex)
@@ -435,6 +430,211 @@ namespace QuizApplication.WebApp.Controllers
                 ModelState.AddModelError("", "Create mislukt." + ex.Message);
                 return View(vm);
             }
+        }
+
+
+        // GET: edit
+        public async Task<ActionResult> EditQuestionAsync(Guid Id)
+        {
+            try
+            {
+                if (Id == null)
+                    return Redirect("/Error/400");
+
+                Question question = await questionRepo.GetQuestionByIdAsync(Id);
+                Answer answer = await answerRepo.GetAnswerByQuestionAsync(question.QuestionId);
+                IEnumerable<Choice> choices = await choiceRepo.GetChoicesAsync(question.QuestionId);
+                EditQuestion_VM vm = new EditQuestion_VM()
+                {
+                    QuestionId = question.QuestionId,
+                    QuestionText = question.QuestionText,
+                    QuizId = question.QuizId,
+                    QuestionAnswerId = answer.AnswerID,
+                    QuestionAnswer = answer.AnswerText,
+                    ChoiceAId =choices.First().ChoiceID,
+                    QuestionChoiceA = choices.First().ChoiceText,
+                    ChoiceBId = choices.ElementAt(1).ChoiceID,
+                    QuestionChoiceB = choices.ElementAt(1).ChoiceText,
+                    ChoiceCId = choices.ElementAt(2).ChoiceID,
+                    QuestionChoiceC = choices.ElementAt(2).ChoiceText
+                };
+
+                return View(vm);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"update error. {ex.Message}");
+                ModelState.AddModelError("", "Update actie mislukt." + ex.InnerException.Message);
+                return RedirectToAction(nameof(Quizzes));
+            }
+        }
+        
+        // POST: edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditQuestionAsync(Guid Id, IFormCollection collection, EditQuestion_VM vm)
+        {
+            try
+            {
+                // TODO: Add update logic here
+                if (Id == null)
+                    return BadRequest();
+
+                Question question = new Question()
+                {
+                    QuizId = vm.QuizId,
+                    QuestionId = vm.QuestionId,
+                    QuestionText = vm.QuestionText
+                };
+
+                var resultQuestion = await questionRepo.Update(question);
+                if (resultQuestion == null)
+                    return BadRequest();
+
+                Answer answer = new Answer()
+                {
+                    AnswerID = vm.QuestionAnswerId,
+                    AnswerText = vm.QuestionAnswer,
+                    QuestionID = vm.QuestionId
+                };
+                var resultAnswer = await answerRepo.Update(answer);
+                if (resultAnswer == null)
+                    return BadRequest();
+
+                Choice a = new Choice()
+                {
+                    ChoiceID = vm.ChoiceAId,
+                    QuestionID = vm.QuestionId,
+                    ChoiceText = vm.QuestionChoiceA
+                };
+                var resultChoiceA = await choiceRepo.Update(a);
+                if (resultChoiceA == null)
+                    return BadRequest();
+
+                Choice b = new Choice()
+                {
+                    ChoiceID = vm.ChoiceBId,
+                    QuestionID = vm.QuestionId,
+                    ChoiceText = vm.QuestionChoiceB
+                };
+                var resultChoiceB = await choiceRepo.Update(b);
+                if (resultChoiceB == null)
+                    return BadRequest();
+
+                Choice c = new Choice()
+                {
+                    ChoiceID = vm.ChoiceCId,
+                    QuestionID = vm.QuestionId,
+                    ChoiceText = vm.QuestionChoiceC
+                };
+                var resultChoiceC = await choiceRepo.Update(c);
+                if (resultChoiceC == null)
+                    return BadRequest();
+
+                return RedirectToAction("DetailQuestion" , vm.QuestionId);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"update error. {ex.Message}");
+                ModelState.AddModelError("", "Update actie mislukt." + ex.InnerException.Message);
+                return View(vm);
+            }
+        }
+
+        //GET : delete
+        public async Task<ActionResult> DeleteQuestionAsync(Guid Id)
+        {
+            try
+            {
+                if (Id == null)
+                    return Redirect("/Error/400");
+
+                Question question = await questionRepo.GetQuestionByIdAsync(Id);
+                if (question == null)
+                    ModelState.AddModelError(String.Empty, "Not Found.");
+
+                Answer answer = await answerRepo.GetAnswerByQuestionAsync(question.QuestionId);
+                if (answer==null)
+                    ModelState.AddModelError(String.Empty, "Not Found.");
+
+                IEnumerable<Choice> choices = await choiceRepo.GetChoicesAsync(question.QuestionId);
+                if (choices == null)
+                    ModelState.AddModelError(String.Empty, "Not Found.");
+
+                EditQuestion_VM vm = new EditQuestion_VM()
+                {
+                    QuestionId = question.QuestionId,
+                    QuestionText = question.QuestionText,
+                    QuizId = question.QuizId,
+                    QuestionAnswerId = answer.AnswerID,
+                    QuestionAnswer = answer.AnswerText,
+                    ChoiceAId = choices.First().ChoiceID,
+                    QuestionChoiceA = choices.First().ChoiceText,
+                    ChoiceBId = choices.ElementAt(1).ChoiceID,
+                    QuestionChoiceB = choices.ElementAt(1).ChoiceText,
+                    ChoiceCId = choices.ElementAt(2).ChoiceID,
+                    QuestionChoiceC = choices.ElementAt(2).ChoiceText
+                };
+
+                return View(vm);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Delete error. {ex.Message}");
+                ModelState.AddModelError("", "Delete actie mislukt." + ex.InnerException.Message);
+                return RedirectToAction(nameof(Quizzes));
+            }
+
+        }
+        // POST: delete
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteQuestionAsync(Guid Id, IFormCollection collection, EditQuestion_VM vm)
+        {
+            try
+            {
+                // TODO: Add update logic here
+                if (Id == null)
+                    return BadRequest();
+
+                //delete question
+                 await questionRepo.DeleteQuestion(vm.QuestionId);
+                //delete answers
+                 await answerRepo.DeleteAnswer(vm.QuestionAnswerId);
+                //delete choices
+                 await choiceRepo.DeleteChoice(vm.ChoiceAId);
+                 await choiceRepo.DeleteChoice(vm.ChoiceBId);
+                 await choiceRepo.DeleteChoice(vm.ChoiceCId);
+                return RedirectToAction("Questions", vm.QuizId);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"update error. {ex.Message}");
+                ModelState.AddModelError("", "Update actie mislukt." + ex.InnerException.Message);
+                return View(vm);
+            }
+        }
+
+        public async Task<ActionResult> DetailQuestionAsync(Guid id)
+        {
+            if (id == null)
+                return BadRequest();
+
+            var question = await questionRepo.GetQuestionByIdAsync(id);
+            var choices = await choiceRepo.GetChoicesAsync(id);
+            var answer = await answerRepo.GetAnswerByQuestionAsync(id);
+            AddQuestion_VM vm = new AddQuestion_VM()
+            {
+                QuestionText = question.QuestionText,
+                QuestionChoiceA = choices.First().ChoiceText,
+                QuestionAnswer = answer.AnswerText,
+                QuestionChoiceB = choices.ElementAt(1).ChoiceText,
+                QuestionChoiceC = choices.ElementAt(2).ChoiceText,
+                QuestionId = question.QuestionId,
+                QuizId = question.QuizId
+            };
+
+            return View(vm);
         }
 
 

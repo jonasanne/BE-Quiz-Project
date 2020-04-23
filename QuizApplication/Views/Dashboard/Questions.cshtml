@@ -7,17 +7,11 @@
 
 <h1>Questions</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.QuestionText)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quiz)
             </th>
             <th></th>
         </tr>
@@ -29,12 +23,9 @@
                 @Html.DisplayFor(modelItem => item.QuestionText)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Quiz.QuizName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.QuestionId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.QuestionId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.QuestionId">Delete</a>
+                <a asp-action="EditQuestion" asp-route-id="@item.QuestionId">Edit</a> |
+                <a asp-action="DetailQuestion" asp-route-id="@item.QuestionId">Details</a> |
+                <a asp-action="DeleteQuestion" asp-route-id="@item.QuestionId">Delete</a>
             </td>
         </tr>
 }

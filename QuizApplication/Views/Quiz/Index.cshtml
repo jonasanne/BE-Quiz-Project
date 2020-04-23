@@ -5,63 +5,53 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <div class="container">
-        @if (User.IsInRole("Admin"))
+    <div class="card-columns">
+
+
+
+
+
+
+
+        @foreach (var item in Model)
         {
-            <p>
-                <a asp-action="Create">Create New</a>
-            </p>
+
+                <div class="card mb-3">
+                    <div style="height: 100%; max-height: 200px; overflow: hidden; display: flex; justify-self: center; align-content: center; align-items: center;">
+                        <img class="card-img-top" style="height: 100%; " src="@item.ImgUrl" alt="Card image">
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title mb-0">@item.QuizName</h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">@item.Description</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-primary" style="color: white;">
+                            Difficulty:
+                            @switch (item.Difficulty)
+                            {
+                                case (0):
+                                    <p style="margin:0;">Beginner</p>
+                                    break;
+
+                                case (1):
+                                    <p style="margin:0;">Medium</p>
+                                    break;
+
+                                case (2):
+                                    <p style="margin:0;">Hard</p>
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                        </li>
+                    </ul>
+                    <div class="card-body">
+                        <a class=" btn-primary btn" asp-action="Details" asp-route-id="@item.QuizID">play</a>
+                    </div>
+                </div>
         }
     </div>
 
-<div class="cards">
-    @foreach (var item in Model)
-    {
-        <div class="card">
-            <a asp-action="Details" asp-route-id="@item.QuizID" class="card-link">
-                <img src="@Html.DisplayFor(modelItem => item.ImgUrl)"
-                     class="card-image" alt="">
-                <div class="content">
-                    <p class="title">
-                        @Html.DisplayFor(modelItem => item.QuizName)
-                    </p>
-                    <p class="description">
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </p>
-                </div>
-            </a>
-        </div>
-    }
-</div>
-
-@*<table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.QuizName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Difficulty)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.QuizName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Difficulty)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.QuizID">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.QuizID">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.QuizID">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>*@

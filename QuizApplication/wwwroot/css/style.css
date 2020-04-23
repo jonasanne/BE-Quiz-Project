@@ -54,24 +54,7 @@
     max-width: 800px;
 }
 
-.cards {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    margin-top: 100px;
-    flex-direction: column;
-}
 
-.card {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: row;
-    max-width: 900px;
-    width: 100%;
-    border: rgb(199, 199, 199) solid 1px;
-}
 
 .card-link {
     display: flex;

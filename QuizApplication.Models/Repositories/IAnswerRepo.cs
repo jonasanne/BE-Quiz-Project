@@ -11,5 +11,10 @@ namespace QuizApplication.Repositories
 
         Task<Answer> GetAnswerByQuestionAsync(Guid id);
         Task<Answer> AddAnswer(Answer answer);
+        Task<Answer> Update(Answer answer);
+        Task<Answer> GetAnswerByIdAsync(Guid Id);
+        Task DeleteAnswer(Guid Id);
+
+
     }
 }

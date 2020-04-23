@@ -1,0 +1,55 @@
+﻿@model QuizApplication.WebApp.ViewModels.AddQuestion_VM
+
+@{
+    ViewData["Title"] = "DetailQuestion";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<h1>DetailQuestion</h1>
+
+<div>
+    <h4>EditQuestion_VM</h4>
+    <hr />
+    <dl class="row">
+
+
+        <dt class = "col-sm-2">
+            Question:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.QuestionText)
+        </dd>
+
+        <dt class = "col-sm-2">
+            Answer:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.QuestionAnswer)
+        </dd>
+
+        <dt class = "col-sm-2">
+            Choice A:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.QuestionChoiceA)
+        </dd>
+
+        <dt class = "col-sm-2">
+            Choice B:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.QuestionChoiceB)
+        </dd>
+
+        <dt class = "col-sm-2">
+            Choice C:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.QuestionChoiceC)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="EditQuestion"  asp-route-id="@Model.QuestionId">Edit</a>
+    <a asp-action="Questions" asp-route-id="@Model.QuizId">Back to List</a>
+</div>

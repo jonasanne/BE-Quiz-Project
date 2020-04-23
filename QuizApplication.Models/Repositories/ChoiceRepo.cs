@@ -34,6 +34,41 @@ namespace QuizApplication.Repositories
             }
         }
 
+        public async Task DeleteChoice(Guid Id)
+        {
+            try
+            {
+                Choice choice = await GetChoiceByIdAsync(Id);
+
+                if (choice == null)
+                {
+                    return;
+                }
+                var result = context.Choices.Remove(choice);
+
+                await context.SaveChangesAsync();
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+            }
+            return;
+        }
+
+        public async Task<Choice> GetChoiceByIdAsync(Guid ChoiceId)
+        {
+            try
+            {
+                return await context.Choices.FirstOrDefaultAsync(c => c.ChoiceID == ChoiceId);
+            }
+
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.InnerException.Message);
+                throw null;
+            }
+        }
+
         public async Task<IEnumerable<Choice>> GetChoicesAsync(Guid QuestionId) { 
             try
             {
@@ -44,6 +79,22 @@ namespace QuizApplication.Repositories
             {
                 Debug.WriteLine(ex.InnerException.Message);
                 throw null;
+            }
+        }
+
+        public async Task<Choice> Update(Choice choice)
+        {
+            try
+            {
+                context.Choices.Update(choice);
+                await context.SaveChangesAsync();
+                return choice;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.InnerException.Message);
+                throw null;
+
             }
         }
     }

@@ -27,7 +27,7 @@
     </dl>
     
     <form asp-action="DeleteSubject">
-        <input type="hidden" asp-for="SubjectId" />
+        @Html.HiddenFor(m => m.SubjectId)
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>

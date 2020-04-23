@@ -6,13 +6,12 @@
 }
 
 <h1>Detail Quiz</h1>
-
 <div>
     <h4>Quiz</h4>
     <hr />
-    <dl class="row">
+    <dl class="row" style="max-width:1100px;">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.QuizName)
+            Quiz name
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.QuizName)
@@ -21,7 +20,22 @@
             @Html.DisplayNameFor(model => model.Difficulty)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Difficulty)
+            @switch (Model.Difficulty)
+            {
+                case (0):
+                    <p style="margin:0;">Beginner</p>
+                    break;
+
+                case (1):
+                    <p style="margin:0;">Medium</p>
+                    break;
+
+                case (2):
+                    <p style="margin:0;">Hard</p>
+                    break;
+                default:
+                    break;
+            }
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
@@ -32,7 +46,7 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ImgUrl)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-10" style="overflow:auto;">
             @Html.DisplayFor(model => model.ImgUrl)
         </dd>
         <dt class = "col-sm-2">

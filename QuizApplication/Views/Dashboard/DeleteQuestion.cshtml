@@ -1,0 +1,59 @@
+﻿@model QuizApplication.WebApp.ViewModels.EditQuestion_VM
+
+@{
+    ViewData["Title"] = "DeleteQuestion";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<h1>Delete question</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <hr />
+    <dl class="row">
+
+        <dt class="col-sm-2">
+            Question:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.QuestionText)
+        </dd>
+        <dt class="col-sm-2">
+           Answer:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.QuestionAnswer)
+        </dd>
+
+        <dt class="col-sm-2">
+            Choice A:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.QuestionChoiceA)
+        </dd>
+
+        <dt class="col-sm-2">
+            Choice B:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.QuestionChoiceB)
+        </dd>
+        <dt class="col-sm-2">
+            Choice C:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.QuestionChoiceC)
+        </dd>
+    </dl>
+    
+    <form asp-action="DeleteQuestion">
+        @Html.HiddenFor(m => m.QuestionId)
+        @Html.HiddenFor(m => m.ChoiceAId)
+        @Html.HiddenFor(m => m.ChoiceBId)
+        @Html.HiddenFor(m => m.ChoiceCId)
+        @Html.HiddenFor(m => m.QuestionAnswerId)
+
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Questions" asp-route-id="@Model.QuizId">Back to List</a>
+    </form>
+</div>

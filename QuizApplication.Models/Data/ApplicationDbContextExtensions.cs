@@ -642,7 +642,7 @@ namespace QuizApplication.Models.Data
                     Quiz quizStrangerThings = new Quiz
                     {
                         QuizName = "Stranger things",
-                        Difficulty = 2,
+                        Difficulty = 0,
                         QuizID = Guid.Parse("c8f37618-6863-4a79-92bd-4d03dde35158"),
                         SubjectId = Guid.Parse("51a21b7f-557c-4948-9a81-e60de94adad0"),
                         ImgUrl= "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Stranger_Things_logo.png/266px-Stranger_Things_logo.png",
@@ -651,7 +651,7 @@ namespace QuizApplication.Models.Data
                     Quiz quizHalloween = new Quiz
                     {
                         QuizName = "Halloween",
-                        Difficulty = 3,
+                        Difficulty = 2,
                         QuizID = Guid.Parse("6ddc2897-71f0-47f6-a94a-b473c675f131"),
                         SubjectId = Guid.Parse("51a21b7f-557c-4948-9a81-e60de94adad0"),
                         ImgUrl= "https://www.leukvoorkids.nl/wp-content/uploads/wallpaper-halloween-tafereel.jpg",
