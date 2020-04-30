@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -17,6 +18,8 @@ namespace QuizApplication.API.Controllers
     [ApiController]
     public class ScoreController : ControllerBase
     {
+
+        private const string AuthSchemes = CookieAuthenticationDefaults.AuthenticationScheme + ","+ JwtBearerDefaults.AuthenticationScheme;
         private readonly IScoreRepo scoreRepo;
         public ScoreController(IScoreRepo scoreRepo)
         {
@@ -25,7 +28,7 @@ namespace QuizApplication.API.Controllers
 
         // GET: api/Scores
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(AuthenticationSchemes = AuthSchemes)]
         public async Task<ActionResult<IEnumerable<Score>>> GetScoresAsync()
         {
             try
@@ -52,7 +55,7 @@ namespace QuizApplication.API.Controllers
 
 
         [HttpPost]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult> Post([FromForm] Score_DTO dTO)
         {
             var confirmedModel = new Score();

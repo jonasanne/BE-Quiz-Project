@@ -152,5 +152,7 @@ D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\bin\Debug\netcor
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\bin\Debug\netcoreapp3.1\System.Security.Cryptography.Pkcs.dll
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Security.Cryptography.Pkcs.dll
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\obj\Debug\netcoreapp3.1\QuizApplication.API.MvcApplicationPartsAssemblyInfo.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\obj\Debug\netcoreapp3.1\QuizApplication.API.MvcApplicationPartsAssemblyInfo.cache

@@ -8,11 +8,12 @@ namespace QuizApplication.API.Models
 {
     public class LoginDTO
     {
-        [Required]
+        [Required(ErrorMessage = "username is verplicht")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Password is verplicht")]
         public string Password { get; set; }
+
 
         [Required]
         public DateTime BirthDate { get; set; }

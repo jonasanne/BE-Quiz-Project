@@ -113,8 +113,6 @@ namespace QuizApplication.API
                     options.RequireHttpsMetadata = false;
                 });
 
-
-
             //registreren van repos
             services.AddScoped<IQuizRepo, QuizRepo>();
             services.AddScoped<ISubjectRepo, SubjectRepo>();
@@ -124,6 +122,31 @@ namespace QuizApplication.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1.0", new OpenApiInfo { Title = "Security_API", Version = "v1.0" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorizatoin header using the Bearer scheme.",
+
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                          new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            new string[] {}
+
+                    }
+                });
             });
 
             //hsts & HTTPS-redirectoin in production met opties
@@ -193,12 +216,10 @@ namespace QuizApplication.API
 
             });
 
-
             //cors opzetten
             app.UseCors("CorsPolicy");
 
-            
-            
+            app.UseMvc();
             //Seeder voor Identity & Data ---------------------------------------------------------
             //1. roleManager en userManager ophalen.
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
