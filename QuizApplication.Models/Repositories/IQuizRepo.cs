@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static QuizApplication.Models.Quiz;
 
 namespace QuizApplication.Repositories
 {
@@ -18,7 +19,7 @@ namespace QuizApplication.Repositories
         /// </summary>
         /// <param name="difficulty"></param>
         /// <returns></returns>
-        Task<Quiz> GetQuizByDifficultyAsync(int difficulty);
+        Task<Quiz> GetQuizByDifficultyAsync(DifficultyType difficulty);
         Task<Quiz> GetQuizByIdAsync(Guid Id);
         Task<Quiz> AddQuiz(Quiz quiz);
         Task DeleteQuiz(Guid id);

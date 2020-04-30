@@ -20,7 +20,6 @@ namespace QuizApplication.Models.Migrations
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
                 });
-
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new

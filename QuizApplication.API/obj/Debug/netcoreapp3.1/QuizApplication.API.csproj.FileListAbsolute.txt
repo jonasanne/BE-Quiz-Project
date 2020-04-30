@@ -145,5 +145,12 @@ D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\bin\Debug\netcor
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\obj\Debug\netcoreapp3.1\QuizApplication.API.MvcApplicationPartsAssemblyInfo.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.API\obj\Debug\netcoreapp3.1\QuizApplication.API.MvcApplicationPartsAssemblyInfo.cache

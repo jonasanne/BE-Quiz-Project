@@ -8,6 +8,18 @@ namespace QuizApplication.Models
 {
     public class Quiz
     {
+
+        public enum DifficultyType
+        {
+            [Display(Name = "Beginner")]
+            Beginner = 0,
+            [Display(Name = "Medium")]
+            Medium = 1,
+            [Display(Name = "Hard")]
+            Hard = 2
+        }
+
+
         [Key]
         public Guid QuizID { get; set; } = Guid.NewGuid();
 
@@ -15,8 +27,13 @@ namespace QuizApplication.Models
         [Required]
         public string QuizName { get; set; }
 
+
         [Required]
-        public int Difficulty { get; set; } // 1 , 2, 3
+        [EnumDataType(typeof(DifficultyType), ErrorMessage = "{0} is geen geldige keuze.")]
+        [Range(0, 2, ErrorMessage = "Wrong choice.")]
+        public DifficultyType Difficulty { get; set; } // 1 , 2, 3
+
+
         [MaxLength(200)]
         public string Description { get; set; } 
         public string ImgUrl { get; set; } 

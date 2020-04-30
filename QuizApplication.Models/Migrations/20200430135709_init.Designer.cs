@@ -10,7 +10,7 @@ using QuizApplication.Data;
 namespace QuizApplication.Models.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200423152326_init")]
+    [Migration("20200430135709_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

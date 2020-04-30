@@ -28,24 +28,7 @@
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item bg-primary" style="color: white;">
-                            Difficulty:
-                            @switch (item.Difficulty)
-                            {
-                                case (0):
-                                    <p style="margin:0;">Beginner</p>
-                                    break;
-
-                                case (1):
-                                    <p style="margin:0;">Medium</p>
-                                    break;
-
-                                case (2):
-                                    <p style="margin:0;">Hard</p>
-                                    break;
-                                default:
-                                    break;
-                            }
-
+                            Difficulty: @item.Difficulty
                         </li>
                     </ul>
                     <div class="card-body">

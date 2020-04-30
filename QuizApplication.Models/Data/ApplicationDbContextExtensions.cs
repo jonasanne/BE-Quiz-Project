@@ -566,7 +566,40 @@ namespace QuizApplication.Models.Data
                 },
 
         };
+        private static List<Score> _Scores = new List<Score>
+        {
+            new Score()
+            {
+                DateOfScore = DateTime.Now,
+                ScoreId = Guid.NewGuid(),
+                ScorePoints = 70,
+                UserId = Guid.Parse("284243cb-2c97-43dc-bb41-ea429ba69c58")
+            },
+            new Score()
+            {
+                DateOfScore = DateTime.Now,
+                ScoreId = Guid.NewGuid(),
+                ScorePoints = 45,
+                UserId = Guid.Parse("284243cb-2c97-43dc-bb41-ea429ba69c58")
 
+            },
+            new Score()
+            {
+                DateOfScore = DateTime.Now,
+                ScoreId = Guid.NewGuid(),
+                ScorePoints = 15,
+                UserId = Guid.Parse("284243cb-2c97-43dc-bb41-ea429ba69c58")
+
+            },
+            new Score()
+            {
+                DateOfScore = DateTime.Now,
+                ScoreId = Guid.NewGuid(),
+                ScorePoints = 85,
+                UserId = Guid.Parse("284243cb-2c97-43dc-bb41-ea429ba69c58")
+
+            }
+        };
 
 
         public async static Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
@@ -592,7 +625,7 @@ namespace QuizApplication.Models.Data
                 {
                     var user = new IdentityUser()
                     {
-                        Id = Guid.NewGuid().ToString(),
+                        Id = "284243cb-2c97-43dc-bb41-ea429ba69c58",
                         UserName = "Docent@MCT",
                         Email = "Docent@MCT"
 
@@ -642,7 +675,7 @@ namespace QuizApplication.Models.Data
                     Quiz quizStrangerThings = new Quiz
                     {
                         QuizName = "Stranger things",
-                        Difficulty = 0,
+                        Difficulty = (Quiz.DifficultyType)(1) ,
                         QuizID = Guid.Parse("c8f37618-6863-4a79-92bd-4d03dde35158"),
                         SubjectId = Guid.Parse("51a21b7f-557c-4948-9a81-e60de94adad0"),
                         ImgUrl= "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Stranger_Things_logo.png/266px-Stranger_Things_logo.png",
@@ -651,7 +684,7 @@ namespace QuizApplication.Models.Data
                     Quiz quizHalloween = new Quiz
                     {
                         QuizName = "Halloween",
-                        Difficulty = 2,
+                        Difficulty = (Quiz.DifficultyType)(2),
                         QuizID = Guid.Parse("6ddc2897-71f0-47f6-a94a-b473c675f131"),
                         SubjectId = Guid.Parse("51a21b7f-557c-4948-9a81-e60de94adad0"),
                         ImgUrl= "https://www.leukvoorkids.nl/wp-content/uploads/wallpaper-halloween-tafereel.jpg",
@@ -697,6 +730,21 @@ namespace QuizApplication.Models.Data
                         await context.SaveChangesAsync();
                     }
                 }
+                
+
+                //add scores
+                if (!context.Scores.Any())
+                {
+                    foreach (Score a in _Scores)
+                    {
+                        if (!context.Scores.Any(s => s.ScoreId == a.ScoreId))
+                        {
+                            await context.Scores.AddAsync(a);
+                        }
+                        await context.SaveChangesAsync();
+                    }
+                }
+            
             }
             catch (Exception ex)
             {

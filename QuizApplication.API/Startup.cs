@@ -24,6 +24,10 @@ using System.Text; //nodig voor Byte encoding van de keys
 using Microsoft.AspNetCore.Http;
 using Microsoft.OpenApi.Models;
 using QuizApplication.Models.Data;
+using QuizApplication.Repositories;
+using QuizApplication.Models.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer; //Token Authenticatie
+using Microsoft.IdentityModel.Tokens; //Token Authenticatie
 
 namespace QuizApplication.API
 {
@@ -89,8 +93,32 @@ namespace QuizApplication.API
                     };
                 });
 
-            //registreren van repos
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Tokens:Issuer"],
+                        ValidAudience = Configuration["Tokens:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+
+                    };
+                    options.SaveToken = false;
+                    options.RequireHttpsMetadata = false;
+                });
+
+
+
+            //registreren van repos
+            services.AddScoped<IQuizRepo, QuizRepo>();
+            services.AddScoped<ISubjectRepo, SubjectRepo>();
+            services.AddScoped<IScoreRepo, ScoreRepo>();
 
             //open API documentatie
             services.AddSwaggerGen(c =>
@@ -111,6 +139,16 @@ namespace QuizApplication.API
                 });
             }
 
+
+            //registreren van cors
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            }
+            );
 
 
 
@@ -137,6 +175,8 @@ namespace QuizApplication.API
 
             app.UseAuthorization();
 
+            app.UseAuthentication();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -153,11 +193,16 @@ namespace QuizApplication.API
 
             });
 
+
+            //cors opzetten
+            app.UseCors("CorsPolicy");
+
+            
+            
             //Seeder voor Identity & Data ---------------------------------------------------------
             //1. roleManager en userManager ophalen.
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
-
 
             //2. Seeder oproepen
             context.SeedData().Wait(); //Educations , oproepen als extensiemethode

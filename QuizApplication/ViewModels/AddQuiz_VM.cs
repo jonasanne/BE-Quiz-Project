@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static QuizApplication.Models.Quiz;
 
 namespace QuizApplication.WebApp.ViewModels
 {
@@ -12,7 +13,7 @@ namespace QuizApplication.WebApp.ViewModels
 
         public string QuizName { get; set; }
 
-        public int Difficulty { get; set; }
+        public DifficultyType Difficulty { get; set; }
 
         public string Description { get; set; }
         public string ImgUrl { get; set; }
