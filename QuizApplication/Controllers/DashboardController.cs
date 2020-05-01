@@ -36,7 +36,6 @@ namespace QuizApplication.WebApp.Controllers
         {
             return RedirectToAction(nameof(Subjects));
         }
-
         ////            SUBJECTS          ////
 
         // GET: subjects
@@ -66,16 +65,21 @@ namespace QuizApplication.WebApp.Controllers
         {
             try
             {
-                // TODO: Add update logic here
-                if (Id == null)
-                    return BadRequest();
+                if (ModelState.IsValid)
+                {
+                    // TODO: Add update logic here
+                    if (Id == null)
+                        return BadRequest();
 
-                var result = await subjectRepo.Update(subject);
-                if (result == null)
-                    return Redirect("/Error/400");
+                    var result = await subjectRepo.Update(subject);
+                    if (result == null)
+                        return Redirect("/Error/400");
 
 
-                return RedirectToAction(nameof(Subjects));
+                    return RedirectToAction(nameof(Subjects));
+                }
+                return View(subject);
+
             }
             catch (Exception ex)
             {
@@ -84,7 +88,6 @@ namespace QuizApplication.WebApp.Controllers
                 return View(subject);
             }
         }
-
 
         //GET : delete
         public async Task<ActionResult> DeleteSubjectAsync(Guid Id)
@@ -134,17 +137,17 @@ namespace QuizApplication.WebApp.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
-                    throw new Exception("Validation Error");
-                }
-                Subject result = await subjectRepo.AddSubject(subject);
+                    Subject result = await subjectRepo.AddSubject(subject);
 
-                if (result == null)
-                {
-                    throw new Exception("Invalid Entry");
+                    if (result == null)
+                    {
+                        throw new Exception("Invalid Entry");
+                    }
+                    return RedirectToAction(nameof(Subjects));
                 }
-                return RedirectToAction(nameof(Subjects));
+                return View(subject);
 
             }
             catch (Exception ex)
@@ -156,13 +159,18 @@ namespace QuizApplication.WebApp.Controllers
             }
         }
 
+
+
+
         ////            QUIZZES          ////
+       
         // GET: Quizzes
         public async Task<ActionResult> Quizzes()
         {
             var quizzes = await quizRepo.GetQuizzesAsync();
             return View(quizzes);
         }
+        
         // GET: edit
         public async Task<ActionResult> EditQuizAsync(Guid Id)
         {
@@ -200,6 +208,7 @@ namespace QuizApplication.WebApp.Controllers
 
             }
         }
+        
         // POST: edit
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -210,6 +219,10 @@ namespace QuizApplication.WebApp.Controllers
                 // TODO: Add update logic here
                 if (Id == null)
                     return BadRequest();
+
+                //default image
+                if (vm.ImgUrl == null)
+                    vm.ImgUrl = "https://wallpaperaccess.com/full/2384075.jpg";
 
                 Quiz quiz = new Quiz()
                 {
@@ -236,6 +249,7 @@ namespace QuizApplication.WebApp.Controllers
             }
         }
 
+        //Get : detail
         public async Task<ActionResult> DetailQuizAsync(Guid id)
         {
             var quiz = await quizRepo.GetQuizByIdAsync(id);
@@ -287,12 +301,12 @@ namespace QuizApplication.WebApp.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
-                    throw new Exception("Validation Error");
-                }
+                    if(vm.ImgUrl == null)
+                        vm.ImgUrl = "https://wallpaperaccess.com/full/2384075.jpg";
 
-                Quiz quiz = new Quiz()
+                    Quiz quiz = new Quiz()
                 {
                     SubjectId = vm.SubjectId,
                     QuizName = vm.QuizName,
@@ -302,32 +316,101 @@ namespace QuizApplication.WebApp.Controllers
                     Description = vm.Description
                 };
                 Quiz result = await quizRepo.AddQuiz(quiz);
-                if (result == null)
-                {
-                    throw new Exception("Invalid Entry");
-                }
 
+                    if (result == null)
+                    {
+                        throw new Exception("Invalid Entry");
+                    }
 
                 return RedirectToAction(nameof(Quizzes));
+                }
+                return View(vm);
+
 
             }
             catch (Exception ex)
             {
-
                 Debug.WriteLine("unable to create" + ex.Message);
                 ModelState.AddModelError("", "Create mislukt." + ex.Message);
                 return View(vm);
             }
         }
+        //GET : delete
+        public async Task<ActionResult> DeleteQuiz(string Id)
+        {
+            try
+            {
+                if (Id == null)
+                    return Redirect("/Error/400");
+
+                Quiz quiz = await quizRepo.GetQuizByIdAsync(Guid.Parse(Id));
+                return View(quiz);
+            }
+
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Delete error. {ex.Message}");
+                ModelState.AddModelError("", "Delete actie mislukt." + ex.InnerException.Message);
+                return RedirectToAction(nameof(Quizzes));
+            }
+
+        }
+        // POST: delete
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteQuiz(string Id, IFormCollection collection, Quiz quiz)
+        {
+            try
+            {
+                // TODO: Add update logic here
+                if (Id == null)
+                    return BadRequest();
+
+                //delete quiz
+                await quizRepo.DeleteQuiz(Guid.Parse(Id));
+                //delete questions
+                var questions =  await questionRepo.GetQuestionsByQuizAsync(Guid.Parse(Id));
+                foreach(var item in questions)
+                {
+                    //get answer
+                    var answer = await answerRepo.GetAnswerByQuestionAsync(item.QuestionId);
+                    //delete answer
+                    await answerRepo.DeleteAnswer(answer.AnswerID);
+
+                    //get choices
+                    var choices = await choiceRepo.GetChoicesAsync(item.QuestionId);
+                    foreach(var choice in choices)
+                    {
+                        await choiceRepo.DeleteChoice(choice.ChoiceID);
+                    }
+                }
+                return RedirectToAction("Quizzes");
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"update error. {ex.Message}");
+                ModelState.AddModelError("", "Update actie mislukt." + ex.InnerException.Message);
+                return View(quiz);
+            }
+        }
+
+
+
+
+
 
         ////            Questions          ////
 
         // GET: Dashboard/Questions/id
-        public async Task<ActionResult> Questions(Guid Id)
+        public async Task<ActionResult> Questions(string Id)
         {
             if (Id == null)
                 return Redirect("/Error/400");
-            var questions = await questionRepo.GetQuestionsByQuizAsync(Id);
+            var questions = await questionRepo.GetQuestionsByQuizAsync(Guid.Parse(Id));
             return View(questions);
         }
 
@@ -361,71 +444,72 @@ namespace QuizApplication.WebApp.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
-                    throw new Exception("Validation Error");
+                    //add question
+                    Question question = new Question()
+                    {
+                        QuizId = vm.QuizId,
+                        QuestionId = Guid.NewGuid(),
+                        QuestionText = vm.QuestionText
+                    };
+
+                    var result = questionRepo.AddQuestion(question);
+                    if (result == null)
+                    {
+                        return Redirect("/Error/400");
+                    }
+
+                    //add answer
+                    Answer answer = new Answer()
+                    {
+                        AnswerID = Guid.NewGuid(),
+                        AnswerText = vm.QuestionAnswer,
+                        QuestionID = question.QuestionId
+                    };
+                    var resultAnswer = answerRepo.AddAnswer(answer);
+                    if (resultAnswer == null)
+                        return Redirect("/Error/400");
+
+                    //add choice 1
+                    Choice choiceA = new Choice()
+                    {
+                        ChoiceID = Guid.NewGuid(),
+                        ChoiceText = vm.QuestionChoiceA,
+                        QuestionID = question.QuestionId
+                    };
+                    var resultChoiceA = choiceRepo.AddChoice(choiceA);
+                    if (resultChoiceA == null)
+                        return Redirect("/Error/400");
+                    //add choice 2
+                    Choice choiceB = new Choice()
+                    {
+                        ChoiceID = Guid.NewGuid(),
+                        ChoiceText = vm.QuestionChoiceB,
+                        QuestionID = question.QuestionId
+                    };
+                    var resultChoiceB = choiceRepo.AddChoice(choiceB);
+                    if (resultChoiceB == null)
+                        return Redirect("/Error/400");
+                    //add choice 3
+                    Choice choiceC = new Choice()
+                    {
+                        ChoiceID = Guid.NewGuid(),
+                        ChoiceText = vm.QuestionChoiceC,
+                        QuestionID = question.QuestionId
+                    };
+                    var resultChoiceC = choiceRepo.AddChoice(choiceC);
+
+                    if (resultChoiceC == null)
+                        return Redirect("/Error/400");
+                    return RedirectToAction("Questions", new { id = vm.QuizId });
+                    
                 }
-                //add question
-                Question question = new Question()
-                {
-                    QuizId = vm.QuizId,
-                    QuestionId = Guid.NewGuid(),
-                    QuestionText = vm.QuestionText
-                };
-
-                var result = questionRepo.AddQuestion(question);
-                if (result == null)
-                {
-                    return Redirect("/Error/400");
-                }
-
-                //add answer
-                Answer answer = new Answer()
-                {
-                    AnswerID = Guid.NewGuid(),
-                    AnswerText = vm.QuestionAnswer,
-                    QuestionID = question.QuestionId
-                };
-                var resultAnswer = answerRepo.AddAnswer(answer);
-                if (resultAnswer == null)
-                    return Redirect("/Error/400");
-
-                //add choice 1
-                Choice choiceA = new Choice()
-                {
-                    ChoiceID = Guid.NewGuid(),
-                    ChoiceText = vm.QuestionChoiceA,
-                    QuestionID = question.QuestionId
-                };
-                var resultChoiceA = choiceRepo.AddChoice(choiceA);
-                if (resultChoiceA == null)
-                    return Redirect("/Error/400");
-                //add choice 2
-                Choice choiceB = new Choice()
-                {
-                    ChoiceID = Guid.NewGuid(),
-                    ChoiceText = vm.QuestionChoiceB,
-                    QuestionID = question.QuestionId
-                };
-                var resultChoiceB = choiceRepo.AddChoice(choiceB);
-                if (resultChoiceB == null)
-                    return Redirect("/Error/400");
-                //add choice 2
-                Choice choiceC = new Choice()
-                {
-                    ChoiceID = Guid.NewGuid(),
-                    ChoiceText = vm.QuestionChoiceC,
-                    QuestionID = question.QuestionId
-                };
-                var resultChoiceC = choiceRepo.AddChoice(choiceC);
-                if (resultChoiceC == null)
-                    return Redirect("/Error/400");
-                return RedirectToAction("Questions", question.QuizId);
+                return View(vm);
 
             }
             catch (Exception ex)
             {
-
                 Debug.WriteLine("unable to create" + ex.Message);
                 ModelState.AddModelError("", "Create mislukt." + ex.Message);
                 return View(vm);
@@ -449,13 +533,13 @@ namespace QuizApplication.WebApp.Controllers
                     QuestionId = question.QuestionId,
                     QuestionText = question.QuestionText,
                     QuizId = question.QuizId,
-                    QuestionAnswerId = answer.AnswerID,
+                    QuestionAnswerId = answer.AnswerID.ToString(),
                     QuestionAnswer = answer.AnswerText,
-                    ChoiceAId =choices.First().ChoiceID,
+                    ChoiceAId =choices.First().ChoiceID.ToString(),
                     QuestionChoiceA = choices.First().ChoiceText,
-                    ChoiceBId = choices.ElementAt(1).ChoiceID,
+                    ChoiceBId = choices.ElementAt(1).ChoiceID.ToString(),
                     QuestionChoiceB = choices.ElementAt(1).ChoiceText,
-                    ChoiceCId = choices.ElementAt(2).ChoiceID,
+                    ChoiceCId = choices.ElementAt(2).ChoiceID.ToString(),
                     QuestionChoiceC = choices.ElementAt(2).ChoiceText
                 };
 
@@ -476,62 +560,67 @@ namespace QuizApplication.WebApp.Controllers
         {
             try
             {
-                // TODO: Add update logic here
-                if (Id == null)
-                    return BadRequest();
-
-                Question question = new Question()
+                if (ModelState.IsValid)
                 {
-                    QuizId = vm.QuizId,
-                    QuestionId = vm.QuestionId,
-                    QuestionText = vm.QuestionText
-                };
+                    // TODO: Add update logic here
+                    if (Id == null)
+                        return BadRequest();
 
-                var resultQuestion = await questionRepo.Update(question);
-                if (resultQuestion == null)
-                    return BadRequest();
+                    Question question = new Question()
+                    {
+                        QuizId = vm.QuizId,
+                        QuestionId = vm.QuestionId,
+                        QuestionText = vm.QuestionText
+                    };
 
-                Answer answer = new Answer()
-                {
-                    AnswerID = vm.QuestionAnswerId,
-                    AnswerText = vm.QuestionAnswer,
-                    QuestionID = vm.QuestionId
-                };
-                var resultAnswer = await answerRepo.Update(answer);
-                if (resultAnswer == null)
-                    return BadRequest();
+                    var resultQuestion = await questionRepo.Update(question);
+                    if (resultQuestion == null)
+                        return BadRequest();
 
-                Choice a = new Choice()
-                {
-                    ChoiceID = vm.ChoiceAId,
-                    QuestionID = vm.QuestionId,
-                    ChoiceText = vm.QuestionChoiceA
-                };
-                var resultChoiceA = await choiceRepo.Update(a);
-                if (resultChoiceA == null)
-                    return BadRequest();
+                    Answer answer = new Answer()
+                    {
+                        AnswerID = Guid.Parse(vm.QuestionAnswerId),
+                        AnswerText = vm.QuestionAnswer,
+                        QuestionID = vm.QuestionId
+                    };
+                    var resultAnswer = await answerRepo.Update(answer);
+                    if (resultAnswer == null)
+                        return BadRequest();
 
-                Choice b = new Choice()
-                {
-                    ChoiceID = vm.ChoiceBId,
-                    QuestionID = vm.QuestionId,
-                    ChoiceText = vm.QuestionChoiceB
-                };
-                var resultChoiceB = await choiceRepo.Update(b);
-                if (resultChoiceB == null)
-                    return BadRequest();
+                    Choice a = new Choice()
+                    {
+                        ChoiceID = Guid.Parse(vm.ChoiceAId),
+                        QuestionID = vm.QuestionId,
+                        ChoiceText = vm.QuestionChoiceA
+                    };
+                    var resultChoiceA = await choiceRepo.Update(a);
+                    if (resultChoiceA == null)
+                        return BadRequest();
 
-                Choice c = new Choice()
-                {
-                    ChoiceID = vm.ChoiceCId,
-                    QuestionID = vm.QuestionId,
-                    ChoiceText = vm.QuestionChoiceC
-                };
-                var resultChoiceC = await choiceRepo.Update(c);
-                if (resultChoiceC == null)
-                    return BadRequest();
+                    Choice b = new Choice()
+                    {
+                        ChoiceID = Guid.Parse(vm.ChoiceBId),
+                        QuestionID = vm.QuestionId,
+                        ChoiceText = vm.QuestionChoiceB
+                    };
+                    var resultChoiceB = await choiceRepo.Update(b);
+                    if (resultChoiceB == null)
+                        return BadRequest();
 
-                return RedirectToAction("DetailQuestion" , vm.QuestionId);
+                    Choice c = new Choice()
+                    {
+                        ChoiceID = Guid.Parse(vm.ChoiceCId),
+                        QuestionID = vm.QuestionId,
+                        ChoiceText = vm.QuestionChoiceC
+                    };
+                    var resultChoiceC = await choiceRepo.Update(c);
+                    if (resultChoiceC == null)
+                        return BadRequest();
+
+                    return RedirectToAction("Questions", new { id = vm.QuizId });
+
+                }
+                return View(vm);
             }
             catch (Exception ex)
             {
@@ -542,14 +631,14 @@ namespace QuizApplication.WebApp.Controllers
         }
 
         //GET : delete
-        public async Task<ActionResult> DeleteQuestionAsync(Guid Id)
+        public async Task<ActionResult> DeleteQuestionAsync(string Id)
         {
             try
             {
                 if (Id == null)
                     return Redirect("/Error/400");
 
-                Question question = await questionRepo.GetQuestionByIdAsync(Id);
+                Question question = await questionRepo.GetQuestionByIdAsync(Guid.Parse(Id));
                 if (question == null)
                     ModelState.AddModelError(String.Empty, "Not Found.");
 
@@ -566,14 +655,15 @@ namespace QuizApplication.WebApp.Controllers
                     QuestionId = question.QuestionId,
                     QuestionText = question.QuestionText,
                     QuizId = question.QuizId,
-                    QuestionAnswerId = answer.AnswerID,
+                    QuestionAnswerId = answer.AnswerID.ToString(),
                     QuestionAnswer = answer.AnswerText,
-                    ChoiceAId = choices.First().ChoiceID,
-                    QuestionChoiceA = choices.First().ChoiceText,
-                    ChoiceBId = choices.ElementAt(1).ChoiceID,
-                    QuestionChoiceB = choices.ElementAt(1).ChoiceText,
-                    ChoiceCId = choices.ElementAt(2).ChoiceID,
-                    QuestionChoiceC = choices.ElementAt(2).ChoiceText
+                    ChoiceAId = choices.Count() < 1 ? null : choices.ElementAt(0).ChoiceID.ToString(),
+                    QuestionChoiceA = choices.Count() < 1 ? null : choices.ElementAt(0).ChoiceText,
+                    ChoiceBId = choices.Count() < 2 ? null : choices.ElementAt(0).ChoiceID.ToString(),
+                    QuestionChoiceB = choices.Count() < 2 ? null : choices.ElementAt(1).ChoiceText,
+                    ChoiceCId = choices.Count() < 3 ? null : choices.ElementAt(0).ChoiceID.ToString(),
+                    QuestionChoiceC = choices.Count() < 3 ? null : choices.ElementAt(2).ChoiceText
+
                 };
 
                 return View(vm);
@@ -589,23 +679,26 @@ namespace QuizApplication.WebApp.Controllers
         // POST: delete
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteQuestionAsync(Guid Id, IFormCollection collection, EditQuestion_VM vm)
+        public async Task<ActionResult> DeleteQuestionAsync(string Id, IFormCollection collection, EditQuestion_VM vm)
         {
             try
             {
                 // TODO: Add update logic here
                 if (Id == null)
                     return BadRequest();
-
                 //delete question
                  await questionRepo.DeleteQuestion(vm.QuestionId);
                 //delete answers
-                 await answerRepo.DeleteAnswer(vm.QuestionAnswerId);
+                 await answerRepo.DeleteAnswer(Guid.Parse(vm.QuestionAnswerId));
                 //delete choices
-                 await choiceRepo.DeleteChoice(vm.ChoiceAId);
-                 await choiceRepo.DeleteChoice(vm.ChoiceBId);
-                 await choiceRepo.DeleteChoice(vm.ChoiceCId);
-                return RedirectToAction("Questions", vm.QuizId);
+                 if (vm.QuestionChoiceA != null)
+                    await choiceRepo.DeleteChoice(Guid.Parse(vm.ChoiceAId));
+                 if (vm.QuestionChoiceB != null)
+                    await choiceRepo.DeleteChoice(Guid.Parse(vm.ChoiceBId));
+                 if (vm.QuestionChoiceC != null)
+                    await choiceRepo.DeleteChoice(Guid.Parse(vm.ChoiceCId));
+
+                 return RedirectToAction("Questions", new { id = vm.QuizId });
             }
             catch (Exception ex)
             {
@@ -615,6 +708,8 @@ namespace QuizApplication.WebApp.Controllers
             }
         }
 
+
+        //GET : details
         public async Task<ActionResult> DetailQuestionAsync(Guid id)
         {
             if (id == null)
@@ -626,24 +721,15 @@ namespace QuizApplication.WebApp.Controllers
             AddQuestion_VM vm = new AddQuestion_VM()
             {
                 QuestionText = question.QuestionText,
-                QuestionChoiceA = choices.First().ChoiceText,
                 QuestionAnswer = answer.AnswerText,
-                QuestionChoiceB = choices.ElementAt(1).ChoiceText,
-                QuestionChoiceC = choices.ElementAt(2).ChoiceText,
+                QuestionChoiceA = choices.Count() < 2 ? null : choices.ElementAt(1).ChoiceText,
+                QuestionChoiceB = choices.Count() < 3 ? null : choices.ElementAt(2).ChoiceText,
+                QuestionChoiceC = choices.Count() < 4 ? null : choices.ElementAt(3).ChoiceText,
                 QuestionId = question.QuestionId,
                 QuizId = question.QuizId
             };
-
             return View(vm);
         }
-
-
-
-
-
-
-
-
 
 
     }

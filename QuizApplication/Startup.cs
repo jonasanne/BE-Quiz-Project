@@ -80,10 +80,11 @@ namespace QuizApplication
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
             //seeden van users en roles
+            ApplicationDbContextExtensions.SeedData(dbContext).Wait();
             ApplicationDbContextExtensions.SeedRolesAsync(roleMgr).Wait();
             ApplicationDbContextExtensions.SeedUsersAsync(userMgr).Wait();
-            ApplicationDbContextExtensions.SeedData(dbContext).Wait();
 
         }
     }

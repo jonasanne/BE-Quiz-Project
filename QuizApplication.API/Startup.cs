@@ -219,7 +219,7 @@ namespace QuizApplication.API
             //cors opzetten
             app.UseCors("CorsPolicy");
 
-            app.UseMvc();
+            //app.UseMvc();
             //Seeder voor Identity & Data ---------------------------------------------------------
             //1. roleManager en userManager ophalen.
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();

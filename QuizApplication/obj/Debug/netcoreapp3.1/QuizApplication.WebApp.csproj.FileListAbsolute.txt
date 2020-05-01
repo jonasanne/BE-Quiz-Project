@@ -211,3 +211,4 @@ D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\EditQuestion.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\DeleteQuestion.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\DetailQuestion.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\DeleteQuiz.cshtml.g.cs

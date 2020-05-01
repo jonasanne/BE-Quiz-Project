@@ -47,6 +47,7 @@
     </dl>
     
     <form asp-action="DeleteQuestion">
+        @Html.HiddenFor(m => m.QuizId)
         @Html.HiddenFor(m => m.QuestionId)
         @Html.HiddenFor(m => m.ChoiceAId)
         @Html.HiddenFor(m => m.ChoiceBId)
