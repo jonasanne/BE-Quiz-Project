@@ -32,37 +32,13 @@ namespace QuizApplication.WebApp.Controllers
             return View(users);
         }
 
+
         // GET: Admin/Details/5
         [Authorize(Roles = "Admin")]
-
         public ActionResult Indexroles()
         {
             var roles = _roleManager.Roles;
             return View(roles);
-        }
-        // GET: Admin/Details/5
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-
-        public IActionResult CreateRole() => View();
-
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-
-        public async Task<IActionResult> CreateRole(AddRole_VM addRoleVM)
-        {
-            if (!ModelState.IsValid) return View(addRoleVM);
-            var role = new IdentityRole
-            {
-                Name = addRoleVM.RoleName
-            };
-
-            IdentityResult result = await _roleManager.CreateAsync(role);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("IndexRoles", _roleManager.Roles);
-            }
-            return View();
         }
 
 

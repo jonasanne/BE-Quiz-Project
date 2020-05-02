@@ -281,3 +281,24 @@
     display: flex;
     justify-content: center;
 }
+
+.content-play {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.c-app-play {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-form-control {
+    display: flex !important;
+    flex-direction: row;
+    align-content: center;
+}

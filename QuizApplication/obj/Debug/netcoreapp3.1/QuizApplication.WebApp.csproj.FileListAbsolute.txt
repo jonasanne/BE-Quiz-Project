@@ -212,3 +212,7 @@ D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\DeleteQuestion.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\DetailQuestion.cshtml.g.cs
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\DeleteQuiz.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Play\Index.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Admin\IndexRoles.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Admin\IndexUsers.cshtml.g.cs
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication\obj\Debug\netcoreapp3.1\Razor\Views\Admin\AddRoleToUser.cshtml.g.cs

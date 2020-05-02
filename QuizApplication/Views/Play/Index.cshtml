@@ -1,0 +1,38 @@
+﻿@model IQueryable<QuizApplication.WebApp.ViewModels.QuestionVM>
+
+
+@{
+    int count = 1, countR = 0;
+}
+
+<main class="c-app-play">
+        <div class="content-play">
+            <form asp-action="Index">
+                @foreach (var item in Model)
+                {
+                <div class="mt-3">
+                    @item.Question
+
+                    @foreach (var choice in item.Choices)
+                    {
+                        count++;
+
+                        <div class="form-check">
+                            <label  class="form-check-label" for="Radio-@count">
+                                <input asp-for="@choice.ChoiceID" type="radio" class="form-check-input" name="Radio-@count" id="Radio-@count" value="@choice.ChoiceID" />
+                                @choice.ChoiceText
+                            </label>
+                        </div>
+                    }
+                </div>
+
+                }
+                <input type="submit" value="Submit Quiz" class="btn btn-primary mt-4 mb-4">
+            </form>
+        </div>
+    </main>
+
+
+
+
+

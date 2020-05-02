@@ -36,6 +36,7 @@ namespace QuizApplication.WebApp.Controllers
         {
             return RedirectToAction(nameof(Subjects));
         }
+
         ////            SUBJECTS          ////
 
         // GET: subjects
@@ -49,7 +50,7 @@ namespace QuizApplication.WebApp.Controllers
         public async Task<ActionResult> EditSubjectAsync(Guid Id)
         {
             if (Id == null)
-                return Redirect("/Error/400");
+                return RedirectToAction("Index");
 
             var Subject = await subjectRepo.GetsubjectById(Id);
             if (Subject == null)
@@ -69,7 +70,7 @@ namespace QuizApplication.WebApp.Controllers
                 {
                     // TODO: Add update logic here
                     if (Id == null)
-                        return BadRequest();
+                        return RedirectToAction("Index");
 
                     var result = await subjectRepo.Update(subject);
                     if (result == null)
@@ -94,7 +95,7 @@ namespace QuizApplication.WebApp.Controllers
         {
 
             if (Id == null)
-                return Redirect("/Error/400");
+                return RedirectToAction("Index");
 
             var Subject = await subjectRepo.GetsubjectById(Id);
             if (Subject == null)
@@ -112,7 +113,8 @@ namespace QuizApplication.WebApp.Controllers
             {
                 // TODO: Add delete logic here
                 if (id == null)
-                    throw new Exception("Bad Delete Request");
+                    return RedirectToAction("Index");
+
                 await subjectRepo.DeleteSubject(id);
                 return RedirectToAction(nameof(Subjects));
             }
@@ -177,7 +179,7 @@ namespace QuizApplication.WebApp.Controllers
             try
             {
                 if(Id == null)
-                    return Redirect("/Error/400");
+                    return RedirectToAction("Quizzes");
 
                 Quiz quiz = await quizRepo.GetQuizByIdAsync(Id);
                 var subjects = await subjectRepo.GetSubjectsAsync();
@@ -218,7 +220,7 @@ namespace QuizApplication.WebApp.Controllers
             {
                 // TODO: Add update logic here
                 if (Id == null)
-                    return BadRequest();
+                    return RedirectToAction("Quizzes");
 
                 //default image
                 if (vm.ImgUrl == null)
@@ -250,9 +252,12 @@ namespace QuizApplication.WebApp.Controllers
         }
 
         //Get : detail
-        public async Task<ActionResult> DetailQuizAsync(Guid id)
+        public async Task<ActionResult> DetailQuizAsync(string id)
         {
-            var quiz = await quizRepo.GetQuizByIdAsync(id);
+            if(id == null)
+                return RedirectToAction("Quizzes");
+
+            var quiz = await quizRepo.GetQuizByIdAsync(Guid.Parse(id));
             var subject = await subjectRepo.GetsubjectById(quiz.SubjectId);
             AddQuiz_VM vm = new AddQuiz_VM()
             {
@@ -307,14 +312,14 @@ namespace QuizApplication.WebApp.Controllers
                         vm.ImgUrl = "https://wallpaperaccess.com/full/2384075.jpg";
 
                     Quiz quiz = new Quiz()
-                {
-                    SubjectId = vm.SubjectId,
-                    QuizName = vm.QuizName,
-                    QuizID = Guid.NewGuid(),
-                    ImgUrl = vm.ImgUrl,
-                    Difficulty = vm.Difficulty,
-                    Description = vm.Description
-                };
+                    {
+                        SubjectId = vm.SubjectId,
+                        QuizName = vm.QuizName,
+                        QuizID = Guid.NewGuid(),
+                        ImgUrl = vm.ImgUrl,
+                        Difficulty = vm.Difficulty,
+                        Description = vm.Description
+                    };
                 Quiz result = await quizRepo.AddQuiz(quiz);
 
                     if (result == null)
@@ -341,7 +346,7 @@ namespace QuizApplication.WebApp.Controllers
             try
             {
                 if (Id == null)
-                    return Redirect("/Error/400");
+                    return RedirectToAction("Quizzes");
 
                 Quiz quiz = await quizRepo.GetQuizByIdAsync(Guid.Parse(Id));
                 return View(quiz);
@@ -364,7 +369,7 @@ namespace QuizApplication.WebApp.Controllers
             {
                 // TODO: Add update logic here
                 if (Id == null)
-                    return BadRequest();
+                    return RedirectToAction("Quizzes");
 
                 //delete quiz
                 await quizRepo.DeleteQuiz(Guid.Parse(Id));
@@ -409,7 +414,7 @@ namespace QuizApplication.WebApp.Controllers
         public async Task<ActionResult> Questions(string Id)
         {
             if (Id == null)
-                return Redirect("/Error/400");
+                return RedirectToAction("Quizzes");
             var questions = await questionRepo.GetQuestionsByQuizAsync(Guid.Parse(Id));
             return View(questions);
         }
@@ -420,7 +425,7 @@ namespace QuizApplication.WebApp.Controllers
             try
             {
                 if (Id == null)
-                    return Redirect("/Error/400");
+                    return RedirectToAction("Quizzes");
 
                 Quiz quiz = await quizRepo.GetQuizByIdAsync(Id);
                 ViewBag.Quiz = quiz;
@@ -518,14 +523,14 @@ namespace QuizApplication.WebApp.Controllers
 
 
         // GET: edit
-        public async Task<ActionResult> EditQuestionAsync(Guid Id)
+        public async Task<ActionResult> EditQuestionAsync(string Id)
         {
             try
             {
                 if (Id == null)
-                    return Redirect("/Error/400");
+                    return RedirectToAction("Quizzes");
 
-                Question question = await questionRepo.GetQuestionByIdAsync(Id);
+                Question question = await questionRepo.GetQuestionByIdAsync(Guid.Parse(Id));
                 Answer answer = await answerRepo.GetAnswerByQuestionAsync(question.QuestionId);
                 IEnumerable<Choice> choices = await choiceRepo.GetChoicesAsync(question.QuestionId);
                 EditQuestion_VM vm = new EditQuestion_VM()
@@ -564,7 +569,7 @@ namespace QuizApplication.WebApp.Controllers
                 {
                     // TODO: Add update logic here
                     if (Id == null)
-                        return BadRequest();
+                        return RedirectToAction("Quizzes");
 
                     Question question = new Question()
                     {
@@ -636,7 +641,7 @@ namespace QuizApplication.WebApp.Controllers
             try
             {
                 if (Id == null)
-                    return Redirect("/Error/400");
+                    return RedirectToAction("Quizzes");
 
                 Question question = await questionRepo.GetQuestionByIdAsync(Guid.Parse(Id));
                 if (question == null)
@@ -685,9 +690,9 @@ namespace QuizApplication.WebApp.Controllers
             {
                 // TODO: Add update logic here
                 if (Id == null)
-                    return BadRequest();
+                    return RedirectToAction("Quizzes");
                 //delete question
-                 await questionRepo.DeleteQuestion(vm.QuestionId);
+                await questionRepo.DeleteQuestion(vm.QuestionId);
                 //delete answers
                  await answerRepo.DeleteAnswer(Guid.Parse(vm.QuestionAnswerId));
                 //delete choices
@@ -713,7 +718,7 @@ namespace QuizApplication.WebApp.Controllers
         public async Task<ActionResult> DetailQuestionAsync(Guid id)
         {
             if (id == null)
-                return BadRequest();
+                return RedirectToAction("Quizzes");
 
             var question = await questionRepo.GetQuestionByIdAsync(id);
             var choices = await choiceRepo.GetChoicesAsync(id);

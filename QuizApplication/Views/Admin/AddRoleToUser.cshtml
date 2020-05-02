@@ -1,0 +1,55 @@
+﻿@model QuizApplication.WebApp.ViewModels.RolesForUser_VM
+@{
+    ViewData["Title"] = "AddRoleToUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Current Roles</h1>
+@if (Model.AssignedRoles.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Role name
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var role in Model.AssignedRoles)
+            {
+
+                <tr>
+                    <td>
+                        @role
+                    </td>
+
+                </tr>
+
+
+            }
+        </tbody>
+    </table>
+
+}
+else
+{
+    <h2>This account does not have any roles. </h2>
+}
+<h2>Add role to user</h2>
+
+
+<h3>Choose a role</h3>
+
+<form asp-action="AddRoleToUser">
+    @Html.HiddenFor(m => m.UserId)
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <select asp-for="RoleId" asp-items="@(new SelectList(Model.UnAssignedRoles))"></select>
+
+    </div>
+    <div class="form-group">
+        <button type="submit" asp-action="AddRoleToUser" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+

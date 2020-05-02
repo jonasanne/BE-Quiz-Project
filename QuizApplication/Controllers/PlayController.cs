@@ -4,90 +4,81 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using QuizApplication.Data;
+using QuizApplication.Models;
+using QuizApplication.Repositories;
+using QuizApplication.WebApp.ViewModels;
 
 namespace QuizApplication.WebApp.Controllers
 {
     public class PlayController : Controller
     {
+        private readonly IQuizRepo quizRepo;
+        private readonly ApplicationDbContext context;
+        private readonly IQuestionRepo questionRepo;
+        private readonly IAnswerRepo answerRepo;
+        private readonly IChoiceRepo choiceRepo;
+
+        public PlayController(IQuizRepo quizRepo , ApplicationDbContext context, IQuestionRepo questionRepo, IAnswerRepo answerRepo, IChoiceRepo choiceRepo)
+        {
+            this.quizRepo = quizRepo;
+            this.context = context;
+            this.questionRepo = questionRepo;
+            this.answerRepo = answerRepo;
+            this.choiceRepo = choiceRepo;
+        }
+
         // GET: Play
-        public ActionResult Index()
+        public async Task<ActionResult> IndexAsync(string Id)
         {
-            return View();
-        }
+            if (Id == null)
+                return Redirect("/Error/400");
 
-        // GET: Play/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+            ////get quiz
+            var quiz = await quizRepo.GetQuizByIdAsync(Guid.Parse(Id));
 
-        // GET: Play/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+            List<QuestionVM> _questions = new List<QuestionVM>();
 
-        // POST: Play/Create
+            //niewe play VM
+            PlayQuiz_VM vm = new PlayQuiz_VM();
+            vm.QuizId = quiz.QuizID.ToString();
+            vm.QuizName = quiz.QuizName;
+
+
+            ////vragen ophalen
+            var questions = await questionRepo.GetQuestionsByQuizAsync(quiz.QuizID);
+            foreach (var question in questions)
+            {
+                Answer answer = await answerRepo.GetAnswerByQuestionAsync(question.QuestionId);
+
+                IEnumerable<Choice> choices = await choiceRepo.GetChoicesAsync(question.QuestionId);
+                List<Choice> ListChoices = choices.ToList();
+                Choice answerChoice = new Choice()
+                {
+                    ChoiceID = answer.AnswerID,
+                    ChoiceText = answer.AnswerText,
+                    QuestionID = answer.QuestionID
+                };
+
+                ListChoices.Add(answerChoice);
+                var _question = new QuestionVM()
+                {
+                    QuestionId = question.QuestionId.ToString(),
+                    Question = question.QuestionText,
+                    Choices = ListChoices.OrderBy(e => e.Question).ToList()
+                };
+                _questions.Add(_question);
+            }
+                return View(_questions.AsQueryable());
+        }
+        // POST: Play
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> IndexAsync(string Id, IFormCollection collection, PlayQuiz_VM vm)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Play/Edit/5
-        public ActionResult Edit(int id)
-        {
+            if (Id == null)
+                return Redirect("/Error/400");
             return View();
         }
 
-        // POST: Play/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Play/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Play/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

@@ -3,14 +3,32 @@
 }
 <main>
     <div class="c-app-index">
-        <div class="index-text-container">
-            <h1 class="c-app-index-title">It's always fun to quiz! Go and show you are the smartest person in the world!</h1>
-            <h2 class="c-app-index-sub-title">
-                Sign up and try for free</h2>
+
+        @if (User.IsInRole("Admin") || User.IsInRole("User"))
+        {
+            <div class="index-text-container">
+                <h1 class="c-app-index-title">Welcome back!</h1>
+                <h2 class="c-app-index-sub-title">
+                    Go play a quiz!
+                </h2>
                 <div class="buttons">
-                    <a  asp-area="Identity" asp-page="/Account/Register"type="button" class="btn btn-secondary btn-sign-in mt-3">Sign up</a>
+                    <a asp-controller="Quiz" asp-action="Index"  type="button" class="btn btn-secondary btn-sign-in mt-3">Quizzes</a>
                 </div>
-        </div>
+            </div>
+        }
+        else
+        {
+            <div class="index-text-container">
+                <h1 class="c-app-index-title">It's always fun to quiz! Go and show you are the smartest person in the world!</h1>
+                <h2 class="c-app-index-sub-title">
+                    Sign up and try for free
+                </h2>
+                <div class="buttons">
+                    <a asp-area="Identity" asp-page="/Account/Register" type="button" class="btn btn-secondary btn-sign-in mt-3">Sign up</a>
+                </div>
+            </div>
+
+        }
     </div>
 
 </main>

@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "IndexRoles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model IEnumerable<IdentityRole>
+
+
+<h1>IndexRoles</h1>
+
+@if (!Model.Any())
+{
+    <div>
+        <h2>Nog geen Rollen!</h2>
+    </div>
+}
+else
+{
+    <div class="tableContainer">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Role Id
+                    </th>
+                    <th>
+                        Role name
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.Id)
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+}
+
+

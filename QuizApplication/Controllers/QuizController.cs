@@ -19,25 +19,23 @@ namespace QuizApplication.WebApp.Controllers
         {
             this.quizRepo = quizRepo;
         }
+
         // GET: Quiz
+        [Authorize(Roles = "User,Admin" )]
         public async Task<ActionResult> IndexAsync()
         {
             var quizzes = await quizRepo.GetQuizzesAsync();
             return View(quizzes);
         }
-        // GET: Quiz/Details/5
-        public async Task<ActionResult> DetailsAsync(Guid id)
-        {
-            var quiz = await quizRepo.GetQuizByIdAsync(id);
-            return View(quiz);
-        }
+        
         // GET: Quiz/Create
         [Authorize(Roles = "Admin")]
-
         public ActionResult Create()
         {
             return View();
         }
+        
+        
         // POST: Quiz/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
