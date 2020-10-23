@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -32,53 +33,107 @@ namespace QuizApplication.WebApp.Controllers
         public async Task<ActionResult> IndexAsync(string Id)
         {
             if (Id == null)
-                return Redirect("/Error/400");
-
-            ////get quiz
-            var quiz = await quizRepo.GetQuizByIdAsync(Guid.Parse(Id));
-
-            List<QuestionVM> _questions = new List<QuestionVM>();
-
-            //niewe play VM
-            PlayQuiz_VM vm = new PlayQuiz_VM();
-            vm.QuizId = quiz.QuizID.ToString();
-            vm.QuizName = quiz.QuizName;
-
-
-            ////vragen ophalen
-            var questions = await questionRepo.GetQuestionsByQuizAsync(quiz.QuizID);
-            foreach (var question in questions)
+                return RedirectToAction("Index");
+            try
             {
-                Answer answer = await answerRepo.GetAnswerByQuestionAsync(question.QuestionId);
+                ////get quiz
+                var quiz = await quizRepo.GetQuizByIdAsync(Guid.Parse(Id));
 
-                IEnumerable<Choice> choices = await choiceRepo.GetChoicesAsync(question.QuestionId);
-                List<Choice> ListChoices = choices.ToList();
-                Choice answerChoice = new Choice()
-                {
-                    ChoiceID = answer.AnswerID,
-                    ChoiceText = answer.AnswerText,
-                    QuestionID = answer.QuestionID
-                };
+                var EvalVm = new EvaluationVM();
+                EvalVm.QuizId = quiz.QuizID.ToString();
+                EvalVm.QuizName = quiz.QuizName;
 
-                ListChoices.Add(answerChoice);
-                var _question = new QuestionVM()
+                ////vragen ophalen
+                var questions = await questionRepo.GetQuestionsByQuizAsync(quiz.QuizID);
+                foreach (var question in questions)
                 {
-                    QuestionId = question.QuestionId.ToString(),
-                    Question = question.QuestionText,
-                    Choices = ListChoices.OrderBy(e => e.Question).ToList()
-                };
-                _questions.Add(_question);
+                    //antwoord ophalen
+                    Answer answer = await answerRepo.GetAnswerByQuestionAsync(question.QuestionId);
+                    var q = new QuestionVM()
+                    {
+                        QuestionID = question.QuestionId.ToString(),
+                        QuestionText = question.QuestionText,
+                    };
+                    q.Answers.Add(answer);
+
+                    //choices toevoegen 
+                    IEnumerable<Choice> choices = await choiceRepo.GetChoicesAsync(question.QuestionId);
+                    List<Choice> ListChoices = choices.ToList();
+                    //overlopen choices
+                    foreach (var c in ListChoices)
+                    {
+                        Answer choice = new Answer()
+                        {
+                            AnswerID = c.ChoiceID,
+                            AnswerText = c.ChoiceText,
+                            QuestionID = c.QuestionID
+                        };
+                        q.Answers.Add(choice);
+                        q.Answers = q.Answers.OrderBy(m => m.AnswerText).ToList();
+                    }
+                    EvalVm.Questions.Add(q);
+                }
+                return View(EvalVm);
             }
-                return View(_questions.AsQueryable());
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
-        // POST: Play
+        //// POST: Play
         [HttpPost]
-        public async Task<ActionResult> IndexAsync(string Id, IFormCollection collection, PlayQuiz_VM vm)
+        public async Task<ActionResult> IndexAsync(string Id, IFormCollection collection, EvaluationVM vm)
         {
             if (Id == null)
-                return Redirect("/Error/400");
-            return View();
+                return RedirectToAction("index");
+
+            try
+            {
+                ScoreVM scoreVM = new ScoreVM();
+                int score = 0; //correct answer = +10
+                int correctAnsweredQ = 0; // 0/10
+
+                foreach (var question in vm.Questions) 
+                {
+                    //get correct answer
+                    Answer answer = await answerRepo.GetAnswerByQuestionAsync(Guid.Parse(question.QuestionID));
+
+                    //check if selectedanswer is correct
+                    if (question.SelectedAnswer == answer.AnswerID.ToString()) 
+                    {
+                        //correct! +10 
+                        //counter correct answers +1
+                        score = score + 10;
+                        correctAnsweredQ++;
+                    }
+                }
+                scoreVM.score = score;
+                scoreVM.countCorrectAnswers = correctAnsweredQ;
+                scoreVM.QuizName = vm.QuizName;
+                return RedirectToAction("EndQuiz", scoreVM);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"update error. {ex.InnerException.Message}");
+                ModelState.AddModelError("", "Update actie mislukt." + ex.InnerException.Message);
+                return View(vm);
+            }
+
         }
+
+
+        // GET: Play
+        public async Task<ActionResult> EndQuiz(ScoreVM vm)
+        {
+            if (vm.QuizName == null)
+                return RedirectToAction("Index");
+
+
+            return View(vm);
+        }
+
 
     }
 }
+

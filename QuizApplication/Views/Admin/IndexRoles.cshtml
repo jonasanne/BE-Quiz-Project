@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewData["Title"] = "IndexRoles";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
 }
 @model IEnumerable<IdentityRole>
 
@@ -34,9 +34,7 @@ else
                 {
                     <tr>
                         <td>
-
                             @Html.DisplayFor(modelItem => item.Id)
-
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Name)

@@ -53,6 +53,43 @@ namespace QuizApplication.Models.Data
                     QuestionText = "Who plays the part of Eleven?",
 
                 },
+                //question 6
+                new Question 
+                {
+                    QuestionId = Guid.Parse("33e4a91f-8f9f-4b6f-8c1f-d4dec1905574"),
+                    QuizId = Guid.Parse("c8f37618-6863-4a79-92bd-4d03dde35158"),
+                    QuestionText = "Who lost by the Demogorgon in DnD in the first episode?",
+                },
+                //question 7
+                new Question 
+                {
+                    QuestionId = Guid.Parse("0ba805cd-bf9e-4705-9882-3189984a6b88"),
+                    QuizId = Guid.Parse("c8f37618-6863-4a79-92bd-4d03dde35158"),
+                    QuestionText = "What song do Suzie and Dustin sing together?",
+                },
+                //question 8
+                new Question 
+                {
+                    QuestionId = Guid.Parse("3b95f28b-01cc-422d-9a63-0f3e8cd868bc"),
+                    QuizId = Guid.Parse("c8f37618-6863-4a79-92bd-4d03dde35158"),
+                    QuestionText = "How does Mike describe Troy to El when they are walking through the woods?",
+                },
+                //question 9
+                new Question 
+                {
+                    QuestionId = Guid.Parse("5c407ec1-d022-4b79-95c1-e83d9845a0ec"),
+                    QuizId = Guid.Parse("c8f37618-6863-4a79-92bd-4d03dde35158"),
+                    QuestionText = "What animal rug does Kline have at the entrance of his home?",
+                },
+                //question 10
+                new Question 
+                {
+                    QuestionId = Guid.Parse("adc85329-c687-4160-aea7-c047b1e9f9c2"),
+                    QuizId = Guid.Parse("c8f37618-6863-4a79-92bd-4d03dde35158"),
+                    QuestionText = "What is Erica a fan of that makes her a nerd?",
+                },
+
+
 
                 ///HALLOWEEN QUIZ
                 //question 1
@@ -171,6 +208,44 @@ namespace QuizApplication.Models.Data
                         AnswerText = "Millie Bobby Brown",
                         QuestionID = Guid.Parse("6569a191-6630-4c46-b490-d352a52b4e80"),
                 },
+                //question 6
+                new Answer
+                    {
+                        AnswerID = Guid.NewGuid(),
+                        AnswerText = "Will Byers",
+                        QuestionID = Guid.Parse("33e4a91f-8f9f-4b6f-8c1f-d4dec1905574"),
+                },
+                //question 7
+                new Answer
+                    {
+                        AnswerID = Guid.NewGuid(),
+                        AnswerText = "The Never Ending Story",
+                        QuestionID = Guid.Parse("0ba805cd-bf9e-4705-9882-3189984a6b88"),
+                },
+                //question 8
+                new Answer
+                    {
+                        AnswerID = Guid.NewGuid(),
+                        AnswerText = "Mouth-breather",
+                        QuestionID = Guid.Parse("3b95f28b-01cc-422d-9a63-0f3e8cd868bc"),
+                },
+                //question 9
+                new Answer
+                    {
+                        AnswerID = Guid.NewGuid(),
+                        AnswerText = "Zebra",
+                        QuestionID = Guid.Parse("5c407ec1-d022-4b79-95c1-e83d9845a0ec"),
+                },
+                //question 10
+                new Answer
+                    {
+                        AnswerID = Guid.NewGuid(),
+                        AnswerText = "My Little Pony",
+                        QuestionID = Guid.Parse("adc85329-c687-4160-aea7-c047b1e9f9c2"),
+                },
+
+
+
                 ///HALLOWEEN QUIZ
                 //question 1               
                 new Answer
@@ -354,6 +429,111 @@ namespace QuizApplication.Models.Data
                     QuestionID = Guid.Parse("6569a191-6630-4c46-b490-d352a52b4e80"),
 
                 },
+                //question 6
+                new Choice
+                {
+                    ChoiceID = Guid.NewGuid(),
+                    ChoiceText = "Jonathan Byers",
+                    QuestionID = Guid.Parse("33e4a91f-8f9f-4b6f-8c1f-d4dec1905574"),
+
+                },
+                new Choice
+                {
+                    ChoiceID = Guid.NewGuid(),
+                    ChoiceText = "Mike Wheeler",
+                    QuestionID = Guid.Parse("33e4a91f-8f9f-4b6f-8c1f-d4dec1905574"),
+
+                },
+                new Choice
+                {
+                    ChoiceID = Guid.NewGuid(),
+                    ChoiceText = "Lucas Sinclair",
+                    QuestionID = Guid.Parse("33e4a91f-8f9f-4b6f-8c1f-d4dec1905574"),
+
+                },
+                //question 7
+                new Choice
+                {
+                    ChoiceID = Guid.NewGuid(),
+                    ChoiceText = "Lost in Your Eyes",
+                    QuestionID = Guid.Parse("0ba805cd-bf9e-4705-9882-3189984a6b88"),
+
+                },
+                new Choice
+                {
+                    ChoiceID = Guid.NewGuid(),
+                    ChoiceText = "I wanna Dance With Someone",
+                    QuestionID = Guid.Parse("0ba805cd-bf9e-4705-9882-3189984a6b88"),
+
+                },
+                new Choice
+                {
+                    ChoiceID = Guid.NewGuid(),
+                    ChoiceText = "Never Gonna Give You Up",
+                    QuestionID = Guid.Parse("0ba805cd-bf9e-4705-9882-3189984a6b88"),
+
+                },
+                //question 8
+                new Choice
+                {
+                    ChoiceID = Guid.NewGuid(),
+                    ChoiceText = "Der-brain",
+                    QuestionID = Guid.Parse("3b95f28b-01cc-422d-9a63-0f3e8cd868bc"),
+
+                },
+                new Choice
+                {
+                    ChoiceID = Guid.NewGuid(),
+                    ChoiceText = "Dirtbag",
+                    QuestionID = Guid.Parse("3b95f28b-01cc-422d-9a63-0f3e8cd868bc"),
+
+                },
+                new Choice
+                {
+                    ChoiceID = Guid.NewGuid(),
+                    ChoiceText = "Doofus",
+                    QuestionID = Guid.Parse("3b95f28b-01cc-422d-9a63-0f3e8cd868bc"),
+
+                },
+                //question 9
+                new Choice
+                {
+                    ChoiceID = Guid.NewGuid(),
+                    ChoiceText = "Lion",
+                    QuestionID = Guid.Parse("5c407ec1-d022-4b79-95c1-e83d9845a0ec"),
+                },
+                new Choice
+                {
+                    ChoiceID = Guid.NewGuid(),
+                    ChoiceText = "Wolf",
+                    QuestionID = Guid.Parse("5c407ec1-d022-4b79-95c1-e83d9845a0ec"),
+                },
+                new Choice
+                {
+                    ChoiceID = Guid.NewGuid(),
+                    ChoiceText = "Tiger",
+                    QuestionID = Guid.Parse("5c407ec1-d022-4b79-95c1-e83d9845a0ec"),
+                },
+                //question 10
+                new Choice
+                {
+                    ChoiceID = Guid.NewGuid(),
+                    ChoiceText = "Rainbow Brite",
+                    QuestionID = Guid.Parse("adc85329-c687-4160-aea7-c047b1e9f9c2"),
+                },
+                new Choice
+                {
+                    ChoiceID = Guid.NewGuid(),
+                    ChoiceText = "The Care Bears",
+                    QuestionID = Guid.Parse("adc85329-c687-4160-aea7-c047b1e9f9c2"),
+                },
+                new Choice
+                {
+                    ChoiceID = Guid.NewGuid(),
+                    ChoiceText = "MoonDreamers",
+                    QuestionID = Guid.Parse("adc85329-c687-4160-aea7-c047b1e9f9c2"),
+                },
+
                 ///HALLOWEEN 
                 //question 1
                 new Choice
@@ -573,14 +753,17 @@ namespace QuizApplication.Models.Data
                 DateOfScore = DateTime.Now,
                 ScoreId = Guid.NewGuid(),
                 ScorePoints = 70,
-                UserId = Guid.Parse("284243cb-2c97-43dc-bb41-ea429ba69c58")
+                UserId = Guid.Parse("284243cb-2c97-43dc-bb41-ea429ba69c58"),
+                QuizId = Guid.Parse("c8f37618-6863-4a79-92bd-4d03dde35158")
             },
             new Score()
             {
                 DateOfScore = DateTime.Now,
                 ScoreId = Guid.NewGuid(),
                 ScorePoints = 45,
-                UserId = Guid.Parse("284243cb-2c97-43dc-bb41-ea429ba69c58")
+                UserId = Guid.Parse("284243cb-2c97-43dc-bb41-ea429ba69c58"),
+                QuizId = Guid.Parse("c8f37618-6863-4a79-92bd-4d03dde35158")
+
 
             },
             new Score()
@@ -588,7 +771,9 @@ namespace QuizApplication.Models.Data
                 DateOfScore = DateTime.Now,
                 ScoreId = Guid.NewGuid(),
                 ScorePoints = 15,
-                UserId = Guid.Parse("284243cb-2c97-43dc-bb41-ea429ba69c58")
+                UserId = Guid.Parse("284243cb-2c97-43dc-bb41-ea429ba69c58"),
+                QuizId = Guid.Parse("c8f37618-6863-4a79-92bd-4d03dde35158")
+
 
             },
             new Score()
@@ -596,7 +781,9 @@ namespace QuizApplication.Models.Data
                 DateOfScore = DateTime.Now,
                 ScoreId = Guid.NewGuid(),
                 ScorePoints = 85,
-                UserId = Guid.Parse("284243cb-2c97-43dc-bb41-ea429ba69c58")
+                UserId = Guid.Parse("284243cb-2c97-43dc-bb41-ea429ba69c58"),
+                QuizId = Guid.Parse("c8f37618-6863-4a79-92bd-4d03dde35158")
+
 
             }
         };

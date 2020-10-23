@@ -76,4 +76,5 @@ table {
 
 .tableContainer {
     overflow: auto;
+    max-width:1000px;
 }

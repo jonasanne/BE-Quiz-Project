@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\VS2019\\projects\\Back-End\\BE-Quiz-Project\\QuizApplication.Models\\QuizApplication.Models.csproj": {}
+    "E:\\VS2019\\projects\\Back-End\\BE-Quiz-Project\\QuizApplication.Models\\QuizApplication.Models.csproj": {}
   },
   "projects": {
-    "D:\\VS2019\\projects\\Back-End\\BE-Quiz-Project\\QuizApplication.Models\\QuizApplication.Models.csproj": {
+    "E:\\VS2019\\projects\\Back-End\\BE-Quiz-Project\\QuizApplication.Models\\QuizApplication.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\VS2019\\projects\\Back-End\\BE-Quiz-Project\\QuizApplication.Models\\QuizApplication.Models.csproj",
+        "projectUniqueName": "E:\\VS2019\\projects\\Back-End\\BE-Quiz-Project\\QuizApplication.Models\\QuizApplication.Models.csproj",
         "projectName": "QuizApplication.Models",
-        "projectPath": "D:\\VS2019\\projects\\Back-End\\BE-Quiz-Project\\QuizApplication.Models\\QuizApplication.Models.csproj",
+        "projectPath": "E:\\VS2019\\projects\\Back-End\\BE-Quiz-Project\\QuizApplication.Models\\QuizApplication.Models.csproj",
         "packagesPath": "C:\\Users\\Rick\\.nuget\\packages\\",
-        "outputPath": "D:\\VS2019\\projects\\Back-End\\BE-Quiz-Project\\QuizApplication.Models\\obj\\",
+        "outputPath": "E:\\VS2019\\projects\\Back-End\\BE-Quiz-Project\\QuizApplication.Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -78,7 +78,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

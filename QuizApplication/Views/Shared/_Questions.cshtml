@@ -1,0 +1,26 @@
+﻿@model QuizApplication.WebApp.ViewModels.EvaluationVM
+@{ 
+    int i = 0, answerCount = 0;
+}
+
+<div>
+    @for(i = 0; i < Model.Questions.Count(); i++)
+    {
+    <div class="question mb-2">
+        <h3>@Model.Questions[i].QuestionText</h3>
+        @Html.HiddenFor(m => m.Questions[i].QuestionID)
+            @foreach(var c in Model.Questions[i].Answers)
+            {
+                answerCount++;
+                var idAnswer = "Answer" + answerCount;
+                <div class="form-check">
+                    <label class="form-check-label">
+                        @Html.RadioButtonFor(m => m.Questions[i].SelectedAnswer, c.AnswerID, new { @id= idAnswer})
+                        @c.AnswerText
+                    </label>
+                </div>
+            }
+        <span asp-validation-for="Questions[i].SelectedAnswer" class="text-danger"></span>
+        </div>
+    }
+</div>

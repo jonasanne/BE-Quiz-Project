@@ -10,7 +10,7 @@ using QuizApplication.Data;
 namespace QuizApplication.Models.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200501075632_init")]
+    [Migration("20200503163905_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -319,6 +319,9 @@ namespace QuizApplication.Models.Migrations
                     b.Property<DateTime>("DateOfScore")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("QuizId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("ScorePoints")
                         .HasColumnType("int");
 
@@ -326,6 +329,8 @@ namespace QuizApplication.Models.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ScoreId");
+
+                    b.HasIndex("QuizId");
 
                     b.ToTable("Scores");
                 });
@@ -340,6 +345,7 @@ namespace QuizApplication.Models.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SubjectName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SubjectId");
@@ -430,6 +436,15 @@ namespace QuizApplication.Models.Migrations
                     b.HasOne("QuizApplication.Models.Subject", "Subject")
                         .WithMany()
                         .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("QuizApplication.Models.Score", b =>
+                {
+                    b.HasOne("QuizApplication.Models.Quiz", "Quiz")
+                        .WithMany()
+                        .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

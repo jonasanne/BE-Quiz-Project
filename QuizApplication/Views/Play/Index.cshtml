@@ -1,36 +1,19 @@
-﻿@model IQueryable<QuizApplication.WebApp.ViewModels.QuestionVM>
+﻿@model QuizApplication.WebApp.ViewModels.EvaluationVM
 
 
-@{
-    int count = 1, countR = 0;
+<h1 class="mb-4" style="font-weight:bold;">@Model.QuizName</h1>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.QuizId);
+    @Html.HiddenFor(m => m.QuizName);
+    @await Html.PartialAsync("_Questions", Model)
+    <input type="submit" class="btn btn-primary mt-2 mb-5" />
 }
 
-<main class="c-app-play">
-        <div class="content-play">
-            <form asp-action="Index">
-                @foreach (var item in Model)
-                {
-                <div class="mt-3">
-                    @item.Question
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 
-                    @foreach (var choice in item.Choices)
-                    {
-                        count++;
-
-                        <div class="form-check">
-                            <label  class="form-check-label" for="Radio-@count">
-                                <input asp-for="@choice.ChoiceID" type="radio" class="form-check-input" name="Radio-@count" id="Radio-@count" value="@choice.ChoiceID" />
-                                @choice.ChoiceText
-                            </label>
-                        </div>
-                    }
-                </div>
-
-                }
-                <input type="submit" value="Submit Quiz" class="btn btn-primary mt-4 mb-4">
-            </form>
-        </div>
-    </main>
 
 
 

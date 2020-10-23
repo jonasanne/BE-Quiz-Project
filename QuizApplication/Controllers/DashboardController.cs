@@ -32,6 +32,7 @@ namespace QuizApplication.WebApp.Controllers
         }
 
         // GET: Index
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Index()
         {
             return RedirectToAction(nameof(Subjects));
@@ -40,6 +41,7 @@ namespace QuizApplication.WebApp.Controllers
         ////            SUBJECTS          ////
 
         // GET: subjects
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Subjects()
         {
             var subjects = await subjectRepo.GetSubjectsAsync();
@@ -47,6 +49,7 @@ namespace QuizApplication.WebApp.Controllers
         }
 
         // GET: edit
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> EditSubjectAsync(Guid Id)
         {
             if (Id == null)
@@ -61,6 +64,7 @@ namespace QuizApplication.WebApp.Controllers
         }
         // POST: edit
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditsubjectAsync(Guid Id, IFormCollection collection, Subject subject)
         {
@@ -91,6 +95,7 @@ namespace QuizApplication.WebApp.Controllers
         }
 
         //GET : delete
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteSubjectAsync(Guid Id)
         {
 
@@ -106,6 +111,7 @@ namespace QuizApplication.WebApp.Controllers
         }
         // POST: delete
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteSubjectAsync(Guid id, IFormCollection collection)
         {
@@ -127,12 +133,14 @@ namespace QuizApplication.WebApp.Controllers
         }
 
         //GET : create
+        [Authorize(Roles = "Admin")]
         public ActionResult CreateSubject()
         {
             return View();
         }
         // POST: Quiz/Create
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles = "Admin")]
         public async Task<ActionResult> CreateSubject(IFormCollection collection, Subject subject)
@@ -165,15 +173,17 @@ namespace QuizApplication.WebApp.Controllers
 
 
         ////            QUIZZES          ////
-       
+
         // GET: Quizzes
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Quizzes()
         {
             var quizzes = await quizRepo.GetQuizzesAsync();
             return View(quizzes);
         }
-        
+
         // GET: edit
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> EditQuizAsync(Guid Id)
         {
             try
@@ -213,6 +223,7 @@ namespace QuizApplication.WebApp.Controllers
         
         // POST: edit
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditQuizAsync(Guid Id, IFormCollection collection, AddQuiz_VM vm)
         {
@@ -252,6 +263,7 @@ namespace QuizApplication.WebApp.Controllers
         }
 
         //Get : detail
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DetailQuizAsync(string id)
         {
             if(id == null)
@@ -272,6 +284,7 @@ namespace QuizApplication.WebApp.Controllers
         }
 
         //GET : create
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> CreateQuizAsync()
         {
             try
@@ -300,8 +313,8 @@ namespace QuizApplication.WebApp.Controllers
         }
         // POST: Quiz/Create
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Admin")]
         public async Task<ActionResult> CreateQuiz(IFormCollection collection, AddQuiz_VM vm)
         {
             try
@@ -341,6 +354,7 @@ namespace QuizApplication.WebApp.Controllers
             }
         }
         //GET : delete
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteQuiz(string Id)
         {
             try
@@ -362,6 +376,7 @@ namespace QuizApplication.WebApp.Controllers
         }
         // POST: delete
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteQuiz(string Id, IFormCollection collection, Quiz quiz)
         {
@@ -411,6 +426,7 @@ namespace QuizApplication.WebApp.Controllers
         ////            Questions          ////
 
         // GET: Dashboard/Questions/id
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Questions(string Id)
         {
             if (Id == null)
@@ -420,6 +436,7 @@ namespace QuizApplication.WebApp.Controllers
         }
 
         //GET /dashboard/Question/Create
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> CreateQuestionAsync(Guid Id)
         {
             try
@@ -444,6 +461,7 @@ namespace QuizApplication.WebApp.Controllers
         
         // POST: Question/Create
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateQuestionAsync(IFormCollection collection, AddQuestion_VM vm)
         {
@@ -523,6 +541,7 @@ namespace QuizApplication.WebApp.Controllers
 
 
         // GET: edit
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> EditQuestionAsync(string Id)
         {
             try
@@ -560,6 +579,7 @@ namespace QuizApplication.WebApp.Controllers
         
         // POST: edit
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditQuestionAsync(Guid Id, IFormCollection collection, EditQuestion_VM vm)
         {
@@ -636,6 +656,7 @@ namespace QuizApplication.WebApp.Controllers
         }
 
         //GET : delete
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteQuestionAsync(string Id)
         {
             try
@@ -683,6 +704,7 @@ namespace QuizApplication.WebApp.Controllers
         }
         // POST: delete
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteQuestionAsync(string Id, IFormCollection collection, EditQuestion_VM vm)
         {
@@ -715,6 +737,7 @@ namespace QuizApplication.WebApp.Controllers
 
 
         //GET : details
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DetailQuestionAsync(Guid id)
         {
             if (id == null)
@@ -727,9 +750,9 @@ namespace QuizApplication.WebApp.Controllers
             {
                 QuestionText = question.QuestionText,
                 QuestionAnswer = answer.AnswerText,
-                QuestionChoiceA = choices.Count() < 2 ? null : choices.ElementAt(1).ChoiceText,
-                QuestionChoiceB = choices.Count() < 3 ? null : choices.ElementAt(2).ChoiceText,
-                QuestionChoiceC = choices.Count() < 4 ? null : choices.ElementAt(3).ChoiceText,
+                QuestionChoiceA = choices.Count() < 2 ? null : choices.ElementAt(0).ChoiceText,
+                QuestionChoiceB = choices.Count() < 3 ? null : choices.ElementAt(1).ChoiceText,
+                QuestionChoiceC = choices.Count() < 4 ? null : choices.ElementAt(2).ChoiceText,
                 QuestionId = question.QuestionId,
                 QuizId = question.QuizId
             };

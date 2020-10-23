@@ -7,28 +7,28 @@ using System.Threading.Tasks;
 
 namespace QuizApplication.WebApp.ViewModels
 {
-    public class PlayQuiz_VM
-    {
-
-        public string QuizId { get; set; }
-        public string QuizName { get; set; }
-        public ICollection<QuestionVM> Questions { get; set; }
-        public ICollection<QuizAnswersVM> UserAnswers { get; set; }
-    }
     public class QuestionVM
     {
-        public string QuestionId { get; set; }
-        public string Question { get; set; }
-        public ICollection<Choice> Choices { get; set; }
+        public string QuestionID { set; get; }
+        public string QuestionText { set; get; }
+        public List<Answer> Answers { set; get; }
+
+        [Display(Name = "antwoord")]
+        [Required(ErrorMessage ="{0} is verplicht")]
+        public string SelectedAnswer { set; get; }
+        public QuestionVM()
+        {
+            Answers = new List<Answer>();
+        }
     }
-    public class QuizAnswersVM
+    public class EvaluationVM
     {
-        public string QuestionId { get; set; }
-        public string QuestionText { get; set; }
-        public string AnswerQ { get; set; }
-        public bool IsCorrect { get; set; }
-
+        public string QuizName { get; set; }
+        public string QuizId { get; set; }
+        public List<QuestionVM> Questions { set; get; }
+        public EvaluationVM()
+        {
+            Questions = new List<QuestionVM>();
+        }
     }
-
-
 }

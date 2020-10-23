@@ -47,25 +47,11 @@ namespace QuizApplication.Models.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Scores",
-                columns: table => new
-                {
-                    ScoreId = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false),
-                    ScorePoints = table.Column<int>(nullable: false),
-                    DateOfScore = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Scores", x => x.ScoreId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Subjects",
                 columns: table => new
                 {
                     SubjectId = table.Column<Guid>(nullable: false),
-                    SubjectName = table.Column<string>(nullable: true),
+                    SubjectName = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -221,6 +207,27 @@ namespace QuizApplication.Models.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Scores",
+                columns: table => new
+                {
+                    ScoreId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    ScorePoints = table.Column<int>(nullable: false),
+                    DateOfScore = table.Column<DateTime>(nullable: false),
+                    QuizId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Scores", x => x.ScoreId);
+                    table.ForeignKey(
+                        name: "FK_Scores_Quizzes_QuizId",
+                        column: x => x.QuizId,
+                        principalTable: "Quizzes",
+                        principalColumn: "QuizID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Answers",
                 columns: table => new
                 {
@@ -316,6 +323,11 @@ namespace QuizApplication.Models.Migrations
                 name: "IX_Quizzes_SubjectId",
                 table: "Quizzes",
                 column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Scores_QuizId",
+                table: "Scores",
+                column: "QuizId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

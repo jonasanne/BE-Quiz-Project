@@ -7,3 +7,16 @@ D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\bin\Debug\net
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\bin\Debug\netcoreapp3.1\QuizApplication.Models.pdb
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\obj\Debug\netcoreapp3.1\QuizApplication.Models.dll
 D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\obj\Debug\netcoreapp3.1\QuizApplication.Models.pdb
+D:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\obj\Debug\netcoreapp3.1\QuizApplication.Models.csprojAssemblyReference.cache
+E:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\bin\Debug\netcoreapp3.1\QuizApplication.Models.deps.json
+E:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\bin\Debug\netcoreapp3.1\QuizApplication.Models.runtimeconfig.json
+E:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\bin\Debug\netcoreapp3.1\QuizApplication.Models.runtimeconfig.dev.json
+E:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\bin\Debug\netcoreapp3.1\QuizApplication.Models.dll
+E:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\bin\Debug\netcoreapp3.1\QuizApplication.Models.pdb
+E:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\obj\Debug\netcoreapp3.1\QuizApplication.Models.csprojAssemblyReference.cache
+E:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\obj\Debug\netcoreapp3.1\QuizApplication.Models.AssemblyInfoInputs.cache
+E:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\obj\Debug\netcoreapp3.1\QuizApplication.Models.AssemblyInfo.cs
+E:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\obj\Debug\netcoreapp3.1\QuizApplication.Models.csproj.CoreCompileInputs.cache
+E:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\obj\Debug\netcoreapp3.1\QuizApplication.Models.dll
+E:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\obj\Debug\netcoreapp3.1\QuizApplication.Models.pdb
+E:\VS2019\projects\Back-End\BE-Quiz-Project\QuizApplication.Models\obj\Debug\netcoreapp3.1\QuizApplication.Models.genruntimeconfig.cache

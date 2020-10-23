@@ -72,15 +72,13 @@ namespace QuizApplication.API.Controllers
                 confirmedModel = await scoreRepo.AddScore(model);
                 if (confirmedModel == null)
                     return NotFound(model.ScorePoints + "Werd NIET bewaard.");
-            }
+            } 
             catch (Exception ex )
             {
                 Debug.WriteLine(ex.InnerException.Message);
                 return BadRequest("Toevoegen mislukt.");
             }
             return CreatedAtAction("Post", new { id = confirmedModel.ScoreId }, confirmedModel);
-               
-
         }
     }
 }

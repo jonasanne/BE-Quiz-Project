@@ -1,0 +1,23 @@
+﻿@model QuizApplication.WebApp.ViewModels.ScoreVM
+@{
+    ViewData["Title"] = "EndQuiz";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="jumbotron text-center bg-white border-0">
+    <div class="container">
+        <h1 class="jumbotron-heading">Congratulations you have finished : @Model.QuizName</h1>
+        <p class="lead text-muted">
+            Your score : @Model.score/100
+        </p>
+        <p class="lead text-muted">
+            correct answered questions:@Model.countCorrectAnswers/10
+        </p>
+        <p>
+            <a asp-controller="Quiz" asp-action="Index" class="btn btn-primary">Go back to quizzes</a>
+        </p>
+    </div>
+
+
+</section>
+
+

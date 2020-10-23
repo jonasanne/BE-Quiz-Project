@@ -317,6 +317,9 @@ namespace QuizApplication.Models.Migrations
                     b.Property<DateTime>("DateOfScore")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("QuizId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("ScorePoints")
                         .HasColumnType("int");
 
@@ -324,6 +327,8 @@ namespace QuizApplication.Models.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ScoreId");
+
+                    b.HasIndex("QuizId");
 
                     b.ToTable("Scores");
                 });
@@ -338,6 +343,7 @@ namespace QuizApplication.Models.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SubjectName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SubjectId");
@@ -428,6 +434,15 @@ namespace QuizApplication.Models.Migrations
                     b.HasOne("QuizApplication.Models.Subject", "Subject")
                         .WithMany()
                         .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("QuizApplication.Models.Score", b =>
+                {
+                    b.HasOne("QuizApplication.Models.Quiz", "Quiz")
+                        .WithMany()
+                        .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
